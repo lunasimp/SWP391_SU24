@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.grid{
+    display: grid;
+    grid-template: "nav content" 1fr;
+    grid-template-columns: 20% 80%; 
+}
+
+.admin-sidebar{
+    grid-area: nav;    
+    background-color: #F4F6FC;
+}
+.admin-sidebar a{
+    display: block;
+    color: black;
+    padding: 2rem;
+    text-decoration: none;
+    font-size: 20px;
+}
+.admin-sidebar a:hover{
+    background-color: #FCD980;
+}
+
+
+.admin-content{
+    grid-area: content;
+    background-color: white;
+    min-width: 720px;
+}
+.form-container{
+    padding: 1rem;
+}
+
+.title {
+    display: flex;
+    align-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
+}
+.title a{
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: #99ff66;
+}
+
+.filters{
+    margin: 1rem 0;
+    display: flex;
+    align-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-container img{
+    width: 100px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+table thead{
+    background-color: #1C1E53;
+    color: white;
+}
+.cel-1{
+    width: 75%;
+}
+.cel-2{
+    width: 25%;
+}
+table th{   
+    padding: 1rem;
+    border: 1px solid #ddd;
+}
+table td{
+    padding: 1rem;
+    border: 1px solid #ddd;
+}
+.course-inf{
+    display: flex;
+    flex-wrap: wrap;
+}
+.course-inf small{
+    color: #B5B7C0;
+}
+.options{
+    display: flex;
+    justify-content: space-between;
+}
+.options a{
+    padding: 10px 20px;
+    background-color: #FCD980;
+    border-radius: 4px;
+}
+.options a:nth-child(2){
+    background-color: #ff8080;
+}
+

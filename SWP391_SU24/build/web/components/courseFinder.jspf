@@ -1,0 +1,23 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page pageEncoding="UTF-8" %>
+<main class="course-finder">
+    <div class="search-container">
+        <%@include file="searchBar.jspf" %>
+        <%@include file="sortDialog.jspf" %>
+    </div>
+    
+    <div class="filter-container">
+        <%@include file="filterDialog.jspf" %>
+    </div>
+    
+    <div class="list-container">
+        <%@include file="courseList.jspf" %>
+    </div>
+    
+    <div class="pagi-container">
+        <c:if test="${pageCount != 0}">
+            <%@include file="courseListingPagination.jspf" %>
+        </c:if>
+    </div>
+</main>
+    
