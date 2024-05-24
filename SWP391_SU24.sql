@@ -24,7 +24,11 @@ CREATE TABLE Categories
     [CategoryDescription] NVARCHAR(69) NOT NULL,
 );
 GO
-
+CREATE TABLE Semesters
+(
+    SemesterID INT IDENTITY(1, 1) PRIMARY KEY,
+    [SemesterDescription] NVARCHAR(69) NOT NULL,
+);
 GO
 CREATE TABLE Courses
 (
