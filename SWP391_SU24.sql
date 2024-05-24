@@ -41,7 +41,8 @@ CREATE TABLE Courses
     IsDiscontinued BIT DEFAULT 0,
     Lecturer NVARCHAR(69) NOT NULL,
     DurationInSeconds INT NOT NULL,
-    
+    SemesterID INT
+        FOREIGN KEY REFERENCES dbo.Semesters (SemesterID),
     CategoryID INT
         FOREIGN KEY REFERENCES dbo.Categories (CategoryID),
     
