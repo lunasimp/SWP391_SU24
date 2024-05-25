@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author Phuoc
- */
+
 public class ChoiceCRUD {
     private int choiceId;
     private int questionId;
