@@ -6,10 +6,7 @@ package model;
 
 import java.sql.Date;
 
-/**
- *
- * @author LAPTOP
- */
+
 public class Certificates {
     private int userId;
     private int courseId;
