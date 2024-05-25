@@ -134,4 +134,5 @@ public class Course {
         return "Course{" + "id=" + id + ", title=" + title + ", description=" + description + ", imgUrl=" + imgUrl + ", publishDate=" + publishDate + ", duration=" + durationInSeconds + ", lecturer=" + lecturer + ", level=" + level + ", category=" + category + '}';
     }
 
+  
 }

@@ -5,19 +5,14 @@
 package model;
 
 
-/**
- *
- * @author Acer
- */
-public class Category {
-
+public class Semester {
     private int id;
     private String description;
 
-    public Category() {
+    public Semester() {
     }
 
-    public Category(int id, String description) {
+    public Semester(int id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -37,10 +32,4 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "Category{" + "id=" + id + ", description=" + description + '}';
-    }
-
 }

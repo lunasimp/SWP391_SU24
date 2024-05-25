@@ -46,8 +46,9 @@
                     <br>
                     <span class="role"><c:choose>
                             <c:when test="${user.getRole() eq 1}">USER</c:when>
-                            <c:when test="${user.getRole() eq 2}">DESIGNER</c:when>
-                            <c:when test="${user.getRole() eq 3}">ADMIN</c:when>
+                            <c:when test="${user.getRole() eq 2}">TEACHER</c:when>
+                            <c:when test="${user.getRole() eq 3}">MANAGER</c:when>
+                            <c:when test="${user.getRole() eq 4}">ADMIN</c:when>
                             <c:otherwise>UNKNOWN</c:otherwise>
                         </c:choose>
                     </span>
