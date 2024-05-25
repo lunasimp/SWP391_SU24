@@ -6,10 +6,7 @@ package model;
 
 import java.sql.Date;
 
-/**
- *
- * @author Yui
- */
+
 public class Course {
     private int id;
     private String title;
