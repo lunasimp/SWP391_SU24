@@ -6,10 +6,6 @@ package model;
 
 import java.util.List;
 
-/**
- *
- * @author Viet
- */
 public class Question {
     private int questionID;
     private String questionDetail;
