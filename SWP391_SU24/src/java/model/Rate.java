@@ -6,10 +6,7 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author LAPTOP
- */
+
 public class Rate {
 
     private int ratingId;
