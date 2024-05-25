@@ -4,10 +4,7 @@
  */
 package model;
 import java.sql.Timestamp;
-/**
- *
- * @author Viet
- */
+
 public class ExamPapers {
     private int paperID;
     private int userID;
