@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author Yui
- */
+
 public class Lesson {
     private int chapterId;
     private int lessonNumber;
