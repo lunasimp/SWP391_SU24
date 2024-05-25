@@ -15,11 +15,11 @@
 .grid{
     display: grid;
     grid-template: "nav content" 1fr;
-    grid-template-columns: 20% 80%; 
+    grid-template-columns: 20% 80%;
 }
 
 .admin-sidebar{
-    grid-area: nav;    
+    grid-area: nav;
     background-color: #F4F6FC;
 }
 .admin-sidebar a{
@@ -83,7 +83,7 @@ table thead{
 .cel-2{
     width: 25%;
 }
-table th{   
+table th{
     padding: 1rem;
     border: 1px solid #ddd;
 }
