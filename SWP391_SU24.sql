@@ -1,4 +1,4 @@
-﻿USE master;
+USE master;
 
 IF EXISTS
 (
@@ -7,7 +7,7 @@ IF EXISTS
     WHERE name = N'SWP391_SU24'
 )
 BEGIN
-    ALTER DATABASE SWP391_SU24 SET OFFLINE WITH ROLLBACK IMMEDIATE;
+    ALTER DATABASE [SWP391_SU24] SET OFFLINE WITH ROLLBACK IMMEDIATE;
     ALTER DATABASE [SWP391_SU24] SET ONLINE;
     DROP DATABASE [SWP391_SU24];
 END;
@@ -45,7 +45,7 @@ CREATE TABLE Courses
         FOREIGN KEY REFERENCES dbo.Semesters (SemesterID),
     CategoryID INT
         FOREIGN KEY REFERENCES dbo.Categories (CategoryID),
-    
+    NewVersionID INT FOREIGN KEY REFERENCES Courses(CourseID),
 );
 GO
 CREATE TABLE Chapters
@@ -107,7 +107,7 @@ CREATE TABLE [Users]
     UserName NVARCHAR(420) NOT NULL,
     Email VARCHAR(420) NOT NULL,
     Password VARCHAR(69) NOT NULL,
-    Role INT CHECK (Role IN ( 1, 2, 3 ,4)) NOT NULL, /*1: User      2: Teacher      3: Manager  4: Admin*/
+    Role INT CHECK (Role IN ( 1, 2, 3 , 4)) NOT NULL, /*1: User      2: Lecturer      3: Admin*/
     DOB DATE,
     Gender BIT,
     PhoneNumber VARCHAR(69),
@@ -168,7 +168,16 @@ CREATE TABLE UserAnswers
                 )
 );
 GO
-
+CREATE TABLE Certificates
+(
+    UserID INT
+        FOREIGN KEY REFERENCES dbo.Users (UserID) ON DELETE CASCADE,
+    CourseID INT
+        FOREIGN KEY REFERENCES dbo.Courses (CourseID) ON DELETE CASCADE,
+    IssueDate DATE NOT NULL, 
+    Status VARCHAR(100) CHECK (Status IN ( 'Normal', 'Revoke' ))
+        DEFAULT 'Normal',
+);
 GO
 CREATE TABLE Ratings
 (
@@ -207,7 +216,9 @@ INSERT [dbo].[Categories] ([CategoryDescription]) VALUES (N'Photography & Video'
 INSERT [dbo].[Categories] ([CategoryDescription]) VALUES (N'Teaching&Academi')
 GO 
 
-)
+INSERT [dbo].[Semesters] ([SemesterDescription]) VALUES (N'Semester 1')
+INSERT [dbo].[Semesters] ([SemesterDescription]) VALUES (N'Semester 2')
+INSERT [dbo].[Semesters] ([SemesterDescription]) VALUES (N'Semester 3')
 GO
 INSERT [dbo].[Courses] ([CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [DurationInSeconds], [SemesterID], [CategoryID]) VALUES (N'https://www.classcentral.com/report/wp-content/uploads/2022/05/Java-BCG-Banner.png', N'Learn to Program in Java', N'Ready to start your programming journey? Being a software engineer is much more than simply writing code--it requires a strong conceptual understanding of computer science. In this course, which was developed through a combination of academic and industry perspectives, learn not only how to code in Java but also how to break down problems and implement their solutions using some of the most fundamental computer science tools.
 
