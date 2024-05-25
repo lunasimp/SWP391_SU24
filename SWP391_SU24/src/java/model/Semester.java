@@ -8,14 +8,14 @@ package model;
  *
  * @author Yui
  */
-public class Level {
+public class Semester {
     private int id;
     private String description;
 
-    public Level() {
+    public Semester() {
     }
 
-    public Level(int id, String description) {
+    public Semester(int id, String description) {
         this.id = id;
         this.description = description;
     }
