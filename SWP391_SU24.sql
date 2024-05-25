@@ -209,7 +209,7 @@ GO
 
 )
 GO
-INSERT [dbo].[Courses] ([CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [DurationInSeconds], [LevelID], [CategoryID]) VALUES (N'https://www.classcentral.com/report/wp-content/uploads/2022/05/Java-BCG-Banner.png', N'Learn to Program in Java', N'Ready to start your programming journey? Being a software engineer is much more than simply writing code--it requires a strong conceptual understanding of computer science. In this course, which was developed through a combination of academic and industry perspectives, learn not only how to code in Java but also how to break down problems and implement their solutions using some of the most fundamental computer science tools.
+INSERT [dbo].[Courses] ([CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [DurationInSeconds], [SemesterID], [CategoryID]) VALUES (N'https://www.classcentral.com/report/wp-content/uploads/2022/05/Java-BCG-Banner.png', N'Learn to Program in Java', N'Ready to start your programming journey? Being a software engineer is much more than simply writing code--it requires a strong conceptual understanding of computer science. In this course, which was developed through a combination of academic and industry perspectives, learn not only how to code in Java but also how to break down problems and implement their solutions using some of the most fundamental computer science tools.
 
 Get plenty of hands-on Java coding experience with methods, logic, loops, variables, parameters, returns, and recursion. And write your code using industry-standard tools and practices to help you build strong habits as you grow your development skill set.
 
