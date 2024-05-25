@@ -7,10 +7,7 @@ package model;
 import java.security.MessageDigest;
 import java.sql.Date;
 
-/**
- *
- * @author LAPTOP
- */
+
 public class User {
 
     private int userID;
