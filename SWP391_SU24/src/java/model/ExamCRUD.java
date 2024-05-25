@@ -7,10 +7,7 @@ import java.sql.Time;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author Phuoc
- */
+
 public class ExamCRUD {
     private int id;
     private String examName;
