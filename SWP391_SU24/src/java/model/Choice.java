@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author Viet
- */
+/
 public class Choice {
     private int choiceID;
     private int questionID;
