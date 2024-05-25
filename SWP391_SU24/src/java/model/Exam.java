@@ -6,10 +6,7 @@ package model;
 
 import java.sql.Time;
 
-/**
- *
- * @author Viet
- */
+
 public class Exam {
     private int examID;
     private String examName;
