@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author Yui
- */
+
 public class Semester {
     private int id;
     private String description;
