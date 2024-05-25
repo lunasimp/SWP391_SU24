@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author Yui
- */
+
 public class Chapter {
     private int id;
     private int chapterNumber;
