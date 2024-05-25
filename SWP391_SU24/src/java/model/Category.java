@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author Yui
- */
+
 public class Category {
     private int id;
     private String description;
