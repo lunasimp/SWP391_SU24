@@ -6,8 +6,12 @@ package model;
 
 import java.sql.Date;
 
-
+/**
+ *
+ * @author Acer
+ */
 public class Course {
+
     private int id;
     private String title;
     private String description;
@@ -19,7 +23,7 @@ public class Course {
     private String lecturer;
     private Level level;
     private Category category;
-    
+
     public Course() {
     }
 
@@ -37,8 +41,6 @@ public class Course {
         this.durationInSeconds = durationInSeconds;
     }
 
-    
-    
     public int getId() {
         return id;
     }
@@ -127,16 +129,10 @@ public class Course {
         this.newVersionId = newVersionId;
     }
 
-    
-    
     @Override
     public String toString() {
         return "Course{" + "id=" + id + ", title=" + title + ", description=" + description + ", imgUrl=" + imgUrl + ", publishDate=" + publishDate + ", duration=" + durationInSeconds + ", lecturer=" + lecturer + ", level=" + level + ", category=" + category + '}';
     }
 
-    
-    
-    
-    
+  
 }
-

@@ -4,17 +4,11 @@
     <div class="footer-container">
         <div class="footer-row">
             <div class="footer-col" style="margin: 0px 0px 0px 0px;">
-                <h2 style="
-                    text-align: justify;
-                    margin: 0px 10px 0px 15px;
-                    font-size: 1.9em;
-                    color: #FCD980;
-                    ">COC CHAM HOC</h2>
                 <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/assets/img/1498-pepe-studying.png" alt="Ok"></a>
             </div>
             <div class="footer-col about-us">
                 <h4>Hotline</h4>
-                <span>Điện thoại: 0123.694.2003 <br>
+                <span>Điện thoại: 0123.456.7890 <br>
                     Email: contact@fpt.edu.vn <br>
                     Địa chỉ: Đất Thổ Cư Hòa Lạc, Km29, ĐCT08, Thạch Hoà, Thạch Thất, Hà Nội
                 </span>
@@ -49,7 +43,7 @@
 <div class="footer-nav">
     <div class="row">
         <div class="col-3">
-            © Copyright COC CHAM HOC 2023 - 2023
+            © Copyright PEPE Team Summer 24
         </div>
         <div class="col-3">
             <nav class="nav-footer">

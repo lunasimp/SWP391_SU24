@@ -4,6 +4,11 @@
  */
 package model;
 
+/**
+ *
+ * @author Acer
+ */
+
 import java.security.MessageDigest;
 import java.sql.Date;
 
@@ -35,7 +40,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.restrictUntil = restrictUntil;
         this.restrictReason = restrictReason;
-    }   
+    }
 
     public int getUserID() {
         return userID;
