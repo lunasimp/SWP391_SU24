@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:set var="level" value="${empty param.level ? -1 : param.level}"></c:set>
+<c:set var="semester" value="${empty param.semester ? -1 : param.semester}"></c:set>
 <c:set var="category" value="${empty param.category ? -1 : param.category}"></c:set>
 <c:set var="duration" value="${empty param.duration ? '0-0' : param.duration}"></c:set>
     <!DOCTYPE html>
@@ -65,11 +65,11 @@
                                 </select>
                             </div>
                             <div>
-                                Levels:
-                                <select name="level" value="${empty param.level ? -1 : param.level}" onchange="applyFilter('level', event.target.value)">
+                                Semesters:
+                                <select name="semester" value="${empty param.semester ? -1 : param.semester}" onchange="applyFilter('level', event.target.value)">
                                     <option value="-1">All</option>
-                                    <c:forEach var="item" items="${levels}">
-                                        <option value="${item.id}" ${level == item.id ? "selected" : ''} >
+                                    <c:forEach var="item" items="${semesters}">
+                                        <option value="${item.id}" ${semester == item.id ? "selected" : ''} >
                                             ${item.description}
                                         </option>
                                     </c:forEach>
