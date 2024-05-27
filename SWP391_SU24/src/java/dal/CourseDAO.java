@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Course;
-import model.Level;
+import model.Semester;
 
 /**
  *
@@ -21,31 +21,31 @@ public class CourseDAO extends MyDAO {
     private static final String searchCourseQuery
             = "from Courses c "
             + "inner join Categories cat on c.CategoryID = cat.CategoryID "
-            + "inner join Levels l on c.LevelID = l.LevelID "
+            + "inner join Semesters s on c.SemesterID = s.SemesterID "
             + "where (N'' = ? or c.Title like ?) "
             + "and (-1 = ? or c.CategoryID = ?) "
-            + "and (-1 = ? or c.LevelID = ?) "
+            + "and (-1 = ? or c.SemesterID = ?) "
             + "and (0 = ? or c.DurationInSeconds > ?) "
             + "and (0 = ? or c.DurationInSeconds <= ?) ";
 
     /**
      * This method searches for courses based on various criteria such as search
-     * query, category ID, level ID, duration, page number, and page size. It
+     * query, category ID, semester ID, duration, page number, and page size. It
      * retrieves a list of courses that match the specified criteria.
      *
      * @param searchQuery The search query used to filter courses by their
      * title.
      * @param categoryId The ID of the category to filter courses by. Set to -1
      * to ignore this filter.
-     * @param levelId The ID of the level to filter courses by. Set to -1 to
-     * ignore this filter.
+     * @param semesterID The ID of the semester to filter courses by. Set to -1
+     * to ignore this filter.
      * @param page The page number of the results to retrieve.
      * @param pageSize The number of courses per page.
      * @return A list of Course objects that match the specified criteria.
      * @throws SQLException If an error occurs while executing the SQL query
      */
     public List<Course> searchCourses(
-            String searchQuery, int categoryId, int levelId, int durationLow, int durationHigh, boolean showHiddenCourses,
+            String searchQuery, int categoryId, int semesterID, int durationLow, int durationHigh, boolean showHiddenCourses,
             String sortName, String sortDuration, String sortPublishDate,
             int page, int pageSize) throws SQLException {
         xSql = "select * " + searchCourseQuery
@@ -60,8 +60,8 @@ public class CourseDAO extends MyDAO {
         ps.setString(2, "%" + searchQuery + "%");
         ps.setInt(3, categoryId);
         ps.setInt(4, categoryId);
-        ps.setInt(5, levelId);
-        ps.setInt(6, levelId);
+        ps.setInt(5, semesterID);
+        ps.setInt(6, semesterID);
         ps.setInt(7, durationLow);
         ps.setInt(8, durationLow);
         ps.setInt(9, durationHigh);
@@ -79,21 +79,21 @@ public class CourseDAO extends MyDAO {
 
     /**
      * This method get the count of Searches the count of courses based on the
-     * provided search query, category ID, level ID, duration,
+     * provided search query, category ID, semester ID, duration,
      *
      * @param searchQuery The search query used to filter courses by their
      * title.
      * @param categoryId The ID of the category to filter courses by. Set to -1
      * to ignore this filter.
-     * @param levelId The ID of the level to filter courses by. Set to -1 to
-     * ignore this filter.
+     * @param semesterID The ID of the semester to filter courses by. Set to -1
+     * to ignore this filter.
      * @param durationLow The maximum duration of the courses to filter by.
      * Specify "00:00:00.00" to ignore this filter.
      * @param durationHigh
      * @return
      * @throws SQLException
      */
-    public int searchCoursesCount(String searchQuery, int categoryId, int levelId, int durationLow, int durationHigh, boolean showHiddenCourses)
+    public int searchCoursesCount(String searchQuery, int categoryId, int semesterID, int durationLow, int durationHigh, boolean showHiddenCourses)
             throws SQLException {
         xSql = "select count(*) " + searchCourseQuery
                 + (showHiddenCourses ? "" : " and IsDiscontinued = 0 and PublishDate is not null ");
@@ -102,8 +102,8 @@ public class CourseDAO extends MyDAO {
         ps.setString(2, "%" + searchQuery + "%");
         ps.setInt(3, categoryId);
         ps.setInt(4, categoryId);
-        ps.setInt(5, levelId);
-        ps.setInt(6, levelId);
+        ps.setInt(5, semesterID);
+        ps.setInt(6, semesterID);
         ps.setInt(7, durationLow);
         ps.setInt(8, durationLow);
         ps.setInt(9, durationHigh);
@@ -117,7 +117,7 @@ public class CourseDAO extends MyDAO {
     public Course getCourseById(int id) throws SQLException {
         xSql = "Select * from Courses c "
                 + "inner join Categories cat on c.CategoryID = cat.CategoryID "
-                + "inner join Levels l on c.LevelID = l.LevelID "
+                + "inner join Semesters s on c.SemesterID = s.SemesterID "
                 + " where CourseID = ?";
         ps = con.prepareStatement(xSql);
         ps.setInt(1, id);
@@ -168,10 +168,10 @@ public class CourseDAO extends MyDAO {
     }
 
     public Course fromResultSet(ResultSet rs) throws SQLException {
-        // Must join with category and level
-        Level level = new Level(rs.getInt("LevelID"), rs.getString("LevelDescription"));
+        // Must join with category and semester
+        Semester semester = new Semester(rs.getInt("SemesterID"), rs.getString("SemesterDescription"));
         Category cat = new Category(rs.getInt("CategoryID"), rs.getString("CategoryDescription"));
-        Course c = new Course(rs.getInt("CourseID"), rs.getString("Title"), rs.getString("CourseDescription"), rs.getString("CourseBannerImage"), rs.getDate("PublishDate"), rs.getBoolean("IsDiscontinued"), rs.getInt("NewVersionID"), rs.getString("Lecturer"), level, cat, rs.getInt("DurationInSeconds"));
+        Course c = new Course(rs.getInt("CourseID"), rs.getString("Title"), rs.getString("CourseDescription"), rs.getString("CourseBannerImage"), rs.getDate("PublishDate"), rs.getBoolean("IsDiscontinued"), rs.getInt("NewVersionID"), rs.getString("Lecturer"), semester, cat, rs.getInt("DurationInSeconds"));
         return c;
     }
 }

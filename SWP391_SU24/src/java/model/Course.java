@@ -21,13 +21,13 @@ public class Course {
     private int newVersionId;
     private int durationInSeconds;
     private String lecturer;
-    private Level level;
+    private Semester semester;
     private Category category;
 
     public Course() {
     }
 
-    public Course(int id, String title, String description, String imgUrl, Date publishDate, boolean isDiscontinued, int newVersionId, String lecturer, Level level, Category category, int durationInSeconds) {
+    public Course(int id, String title, String description, String imgUrl, Date publishDate, boolean isDiscontinued, int newVersionId, String lecturer, Semester semester, Category category, int durationInSeconds) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,7 +36,7 @@ public class Course {
         this.isDiscontinued = isDiscontinued;
         this.newVersionId = newVersionId;
         this.lecturer = lecturer;
-        this.level = level;
+        this.semester = semester;
         this.category = category;
         this.durationInSeconds = durationInSeconds;
     }
@@ -89,12 +89,12 @@ public class Course {
         this.lecturer = lecturer;
     }
 
-    public Level getLevel() {
-        return level;
+    public Semester getSemester() {
+        return semester;
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
     public Category getCategory() {
@@ -131,7 +131,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" + "id=" + id + ", title=" + title + ", description=" + description + ", imgUrl=" + imgUrl + ", publishDate=" + publishDate + ", duration=" + durationInSeconds + ", lecturer=" + lecturer + ", level=" + level + ", category=" + category + '}';
+        return "Course{" + "id=" + id + ", title=" + title + ", description=" + description + ", imgUrl=" + imgUrl + ", publishDate=" + publishDate + ", duration=" + durationInSeconds + ", lecturer=" + lecturer + ", semester=" + semester + ", category=" + category + '}';
     }
 
   

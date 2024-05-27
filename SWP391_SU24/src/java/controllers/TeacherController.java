@@ -6,7 +6,7 @@ package controllers;
 
 import dal.CategoryDAO;
 import dal.CourseDAO;
-import dal.LevelDAO;
+import dal.SemesterDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,7 +66,7 @@ public class TeacherController extends HttpServlet {
         int pageSize = 5;
         int page = ParseUtils.parseIntWithDefault(request.getParameter("page"), 1) - 1;
         int category = ParseUtils.parseIntWithDefault(request.getParameter("category"), -1);
-        int level = ParseUtils.parseIntWithDefault(request.getParameter("level"), -1);
+        int semester = ParseUtils.parseIntWithDefault(request.getParameter("semester"), -1);
         String duration = ParseUtils.defaultIfEmpty(request.getParameter("duration"), "0-0");
 
         String[] parts = duration.split("-");
@@ -86,17 +86,17 @@ public class TeacherController extends HttpServlet {
 
         CourseDAO cd = new CourseDAO();
         CategoryDAO catDao = new CategoryDAO();
-        LevelDAO levelDao = new LevelDAO();
+        SemesterDAO semesterDao = new SemesterDAO();
         try {
-            List<Course> list = cd.searchCourses(search, category, level, low, high, true, sortName, sortDuration, sortPublishDate, page, pageSize);
-            int listCount = cd.searchCoursesCount(search, category, level, low, high, false);
+            List<Course> list = cd.searchCourses(search, category, semester, low, high, true, sortName, sortDuration, sortPublishDate, page, pageSize);
+            int listCount = cd.searchCoursesCount(search, category, semester, low, high, false);
             int pageCount = (int) Math.ceil(listCount / (float) pageSize);
 
             request.setAttribute("courseData", list);
             request.setAttribute("pageCount", pageCount);
             request.setAttribute("listCount", listCount);
             request.setAttribute("categories", catDao.getAllCategories());
-            request.setAttribute("levels", levelDao.getAllLevels());
+            request.setAttribute("semesters", semesterDao.getAllSemesters());
             request.getRequestDispatcher("teacher/teacher.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,7 +4,6 @@
  */
 package model;
 
-/
 public class Choice {
     private int choiceID;
     private int questionID;
