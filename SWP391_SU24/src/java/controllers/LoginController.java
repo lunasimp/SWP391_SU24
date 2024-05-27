@@ -19,7 +19,10 @@ import java.util.Date;
 import java.util.List;
 import utils.EncryptionUtils;
 
-
+/**
+ *
+ * @author LAPTOP
+ */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
 
@@ -70,6 +73,16 @@ public class LoginController extends HttpServlet {
             }
             if (userDAO.checkAdmin(email, eu.toMD5(password))) {
                 response.sendRedirect("admin");
+                return;
+            }
+            
+            if (userDAO.checkManager(email, eu.toMD5(password))) {
+                response.sendRedirect("manager");
+                return;
+            }
+            
+            if (userDAO.checkTeacher(email, eu.toMD5(password))) {
+                response.sendRedirect("teacher");
                 return;
             }
             request.getSession().setAttribute("validate", "");
