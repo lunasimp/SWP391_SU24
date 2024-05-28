@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
+import model.User;
 import utils.ParseUtils;
 
 /**
@@ -88,15 +89,26 @@ public class TeacherController extends HttpServlet {
         CategoryDAO catDao = new CategoryDAO();
         SemesterDAO semesterDao = new SemesterDAO();
         try {
+            User loggedUser = (User) request.getSession().getAttribute("user");
+            List<Course> courseByIdData = cd.getAssignedCoursesById(loggedUser.getUserID());
+            String filterValue = request.getParameter("filterValue");
+
             List<Course> list = cd.searchCourses(search, category, semester, low, high, true, sortName, sortDuration, sortPublishDate, page, pageSize);
             int listCount = cd.searchCoursesCount(search, category, semester, low, high, false);
             int pageCount = (int) Math.ceil(listCount / (float) pageSize);
+
+            if (filterValue == null || filterValue.isEmpty()) {
+                request.setAttribute("courseData", list);
+            } else if (filterValue.equals("assigned")) {
+                request.setAttribute("designerCourses", courseByIdData);
+            }
 
             request.setAttribute("courseData", list);
             request.setAttribute("pageCount", pageCount);
             request.setAttribute("listCount", listCount);
             request.setAttribute("categories", catDao.getAllCategories());
             request.setAttribute("semesters", semesterDao.getAllSemesters());
+            request.setAttribute("filterValue", filterValue);
             request.getRequestDispatcher("teacher/teacher.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
