@@ -8,7 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="semester" value="${empty param.semester ? -1 : param.semester}"></c:set>
 <c:set var="category" value="${empty param.category ? -1 : param.category}"></c:set>
-<c:set var="duration" value="${empty param.duration ? '0-0' : param.duration}"></c:set>
     <!DOCTYPE html>
 
     <style>
@@ -77,23 +76,13 @@
                         </div>
                         <div>
                             Semesters:
-                            <select name="semester" value="${empty param.semester ? -1 : param.semester}" onchange="applyFilter('level', event.target.value)">
+                            <select name="semester" value="${empty param.semester ? -1 : param.semester}" onchange="applyFilter('semester', event.target.value)">
                                 <option value="-1">All</option>
                                 <c:forEach var="item" items="${semesters}">
                                     <option value="${item.id}" ${semester == item.id ? "selected" : ''} >
                                         ${item.description}
                                     </option>
                                 </c:forEach>
-                            </select>
-                        </div>
-                        <div>
-                            Durations:
-                            <select name="duration" value="${empty param.duration ? "0-0" : param.duration}" onchange="applyFilter('duration', event.target.value)">
-                                <option value="0-0">All</option>
-                                <option value="0-36000" ${duration == "0-36000" ? "selected" : ''}>Less than 10 hours</option>
-                                <option value="36000-108000" ${duration == "36000-108000" ? "selected" : ''}>10-30 hours</option>
-                                <option value="108000-216000" ${duration == "108000-216000" ? "selected" : ''}>30-60 hours</option>
-                                <option value="216000-0" ${duration == "216000-0" ? "selected" : ''}>More than 60 hours</option>
                             </select>
                         </div>
                     </div>
@@ -126,7 +115,6 @@
                                             <td>
                                                 <div class="options">
                                                     <a href="${pageContext.request.contextPath}/admin/edit-course?courseId=${x.id}">Edit</a>
-                                                    <a href="${pageContext.request.contextPath}/admin/edit-course?courseId=${x.id}&action=Delete">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>

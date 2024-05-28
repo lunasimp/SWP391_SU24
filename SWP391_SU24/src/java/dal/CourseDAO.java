@@ -24,9 +24,7 @@ public class CourseDAO extends MyDAO {
             + "inner join Semesters s on c.SemesterID = s.SemesterID "
             + "where (N'' = ? or c.Title like ?) "
             + "and (-1 = ? or c.CategoryID = ?) "
-            + "and (-1 = ? or c.SemesterID = ?) "
-            + "and (0 = ? or c.DurationInSeconds > ?) "
-            + "and (0 = ? or c.DurationInSeconds <= ?) ";
+            + "and (-1 = ? or c.SemesterID = ?) ";
 
     /**
      * This method searches for courses based on various criteria such as search
@@ -45,12 +43,12 @@ public class CourseDAO extends MyDAO {
      * @throws SQLException If an error occurs while executing the SQL query
      */
     public List<Course> searchCourses(
-            String searchQuery, int categoryId, int semesterID, int durationLow, int durationHigh, boolean showHiddenCourses,
-            String sortName, String sortDuration, String sortPublishDate,
+            String searchQuery, int categoryId, int semesterID, boolean showHiddenCourses,
+            String sortName, String sortPublishDate,
             int page, int pageSize) throws SQLException {
         xSql = "select * " + searchCourseQuery
                 + (showHiddenCourses ? " " : " and c.IsDiscontinued = 0 and c.PublishDate is not null ")
-                + "order by " + getSortQuery(sortName, sortDuration, sortPublishDate) + " "
+                + "order by " + getSortQuery(sortName, sortPublishDate) + " "
                 + "offset ? rows fetch next ? rows only";
 
         int offset = page * pageSize;
@@ -62,12 +60,8 @@ public class CourseDAO extends MyDAO {
         ps.setInt(4, categoryId);
         ps.setInt(5, semesterID);
         ps.setInt(6, semesterID);
-        ps.setInt(7, durationLow);
-        ps.setInt(8, durationLow);
-        ps.setInt(9, durationHigh);
-        ps.setInt(10, durationHigh);
-        ps.setInt(11, offset);
-        ps.setInt(12, pageSize);
+        ps.setInt(7, offset);
+        ps.setInt(8, pageSize);
         rs = ps.executeQuery();
 
         List<Course> results = new ArrayList<>();
@@ -87,16 +81,13 @@ public class CourseDAO extends MyDAO {
      * to ignore this filter.
      * @param semesterID The ID of the semester to filter courses by. Set to -1
      * to ignore this filter.
-     * @param durationLow The maximum duration of the courses to filter by.
-     * Specify "00:00:00.00" to ignore this filter.
-     * @param durationHigh
      * @return
      * @throws SQLException
      */
-    public int searchCoursesCount(String searchQuery, int categoryId, int semesterID, int durationLow, int durationHigh, boolean showHiddenCourses)
+    public int searchCoursesCount(String searchQuery, int categoryId, int semesterID, boolean showHiddenCourses)
             throws SQLException {
         xSql = "select count(*) " + searchCourseQuery
-                + (showHiddenCourses ? "" : " and IsDiscontinued = 0 and PublishDate is not null ");
+                + (showHiddenCourses ? "" : " and PublishDate is not null ");
         ps = con.prepareStatement(xSql);
         ps.setString(1, searchQuery);
         ps.setString(2, "%" + searchQuery + "%");
@@ -104,10 +95,6 @@ public class CourseDAO extends MyDAO {
         ps.setInt(4, categoryId);
         ps.setInt(5, semesterID);
         ps.setInt(6, semesterID);
-        ps.setInt(7, durationLow);
-        ps.setInt(8, durationLow);
-        ps.setInt(9, durationHigh);
-        ps.setInt(10, durationHigh);
         rs = ps.executeQuery();
 
         rs.next();
@@ -128,7 +115,7 @@ public class CourseDAO extends MyDAO {
         return fromResultSet(rs);
     }
 
-    private String getSortQuery(String sortName, String sortDuration, String sortPublishDate) {
+    private String getSortQuery(String sortName, String sortPublishDate) {
         List<String> sorter = new ArrayList<String>();
         if (sortName != null) {
             switch (sortName) {
@@ -137,17 +124,6 @@ public class CourseDAO extends MyDAO {
                     break;
                 case "desc":
                     sorter.add("c.Title desc");
-                    break;
-            }
-        }
-
-        if (sortDuration != null) {
-            switch (sortDuration) {
-                case "asc":
-                    sorter.add("c.DurationInSeconds asc");
-                    break;
-                case "desc":
-                    sorter.add("c.DurationInSeconds desc");
                     break;
             }
         }
@@ -195,7 +171,7 @@ public class CourseDAO extends MyDAO {
         // Must join with category and semester
         Semester semester = new Semester(rs.getInt("SemesterID"), rs.getString("SemesterDescription"));
         Category cat = new Category(rs.getInt("CategoryID"), rs.getString("CategoryDescription"));
-        Course c = new Course(rs.getInt("CourseID"), rs.getString("Title"), rs.getString("CourseDescription"), rs.getString("CourseBannerImage"), rs.getDate("PublishDate"), rs.getBoolean("IsDiscontinued"), rs.getInt("NewVersionID"), rs.getString("Lecturer"), semester, cat, rs.getInt("DurationInSeconds"));
+        Course c = new Course(rs.getInt("CourseID"), rs.getString("Title"), rs.getString("CourseDescription"), rs.getString("CourseBannerImage"), rs.getDate("PublishDate"), rs.getString("Lecturer"), semester, cat);
         return c;
     }
 }
