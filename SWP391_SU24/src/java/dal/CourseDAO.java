@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Category;
 import model.Course;
 import model.Semester;
@@ -173,5 +175,28 @@ public class CourseDAO extends MyDAO {
         Category cat = new Category(rs.getInt("CategoryID"), rs.getString("CategoryDescription"));
         Course c = new Course(rs.getInt("CourseID"), rs.getString("Title"), rs.getString("CourseDescription"), rs.getString("CourseBannerImage"), rs.getDate("PublishDate"), rs.getString("Lecturer"), semester, cat);
         return c;
+    }
+
+    public Course insert(Course model) {
+        try {
+            xSql = "insert into Courses(CourseBannerImage, Title, CourseDescription, "
+                    + "PublishDate, Lecturer, "
+                    + "SemesterID, CategoryID)"
+                    + " values(?,?,?,?,?,?,?)";
+            ps = con.prepareStatement(xSql);
+            int indexParam = 1;
+            ps.setString(indexParam++, model.getImgUrl());
+            ps.setString(indexParam++, model.getTitle());
+            ps.setString(indexParam++, model.getDescription());
+            ps.setDate(indexParam++, model.getPublishDate());
+            ps.setString(indexParam++, model.getLecturer());
+            ps.setInt(indexParam++, model.getSemester().getId());
+            ps.setInt(indexParam++, model.getCategory().getId());
+            ps.executeUpdate();
+            return model;
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
