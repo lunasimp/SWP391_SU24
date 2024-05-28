@@ -68,21 +68,12 @@ public class TeacherController extends HttpServlet {
         int page = ParseUtils.parseIntWithDefault(request.getParameter("page"), 1) - 1;
         int category = ParseUtils.parseIntWithDefault(request.getParameter("category"), -1);
         int semester = ParseUtils.parseIntWithDefault(request.getParameter("semester"), -1);
-        String duration = ParseUtils.defaultIfEmpty(request.getParameter("duration"), "0-0");
-
-        String[] parts = duration.split("-");
-        int low = ParseUtils.parseIntWithDefault(parts[0], 0);
-        int high = 0;
-        if (parts.length >= 2) {
-            high = ParseUtils.parseIntWithDefault(parts[1], 0);
-        }
 
         String search = request.getParameter("search");
         if (search == null) {
             search = "";
         }
         String sortName = request.getParameter("sortName");
-        String sortDuration = request.getParameter("sortDuration");
         String sortPublishDate = request.getParameter("sortPublishDate");
 
         CourseDAO cd = new CourseDAO();
@@ -93,8 +84,8 @@ public class TeacherController extends HttpServlet {
             List<Course> courseByIdData = cd.getAssignedCoursesById(loggedUser.getUserID());
             String filterValue = request.getParameter("filterValue");
 
-            List<Course> list = cd.searchCourses(search, category, semester, low, high, true, sortName, sortDuration, sortPublishDate, page, pageSize);
-            int listCount = cd.searchCoursesCount(search, category, semester, low, high, false);
+            List<Course> list = cd.searchCourses(search, category, semester, true, sortName, sortPublishDate, page, pageSize);
+            int listCount = cd.searchCoursesCount(search, category, semester, true);
             int pageCount = (int) Math.ceil(listCount / (float) pageSize);
 
             if (filterValue == null || filterValue.isEmpty()) {
