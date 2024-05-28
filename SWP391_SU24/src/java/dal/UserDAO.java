@@ -139,4 +139,45 @@ public class UserDAO extends MyDAO {
                 rs.getString(10)
         );
     }
+    
+    public List<User> searchUsers(String name, int role, int page, int pageSize) throws SQLException {
+        int offset = page * pageSize;
+
+        xSql = "select * from Users\n"
+                + "where (-1 = ? or Role = ?)\n"
+                + "and ('' = ? or UserName like ?)\n"
+                + "order by UserID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        ps = con.prepareStatement(xSql);
+        ps.setInt(1, role);
+        ps.setInt(2, role);
+        ps.setString(3, "%" + name + "%");
+        ps.setString(4, "%" + name + "%");
+        ps.setInt(5, offset);
+        ps.setInt(6, pageSize);
+
+        rs = ps.executeQuery();
+        List<User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(fromResultSet(rs));
+        }
+
+        return users;
+    }
+    
+    public int searchUserCount(String name, int role) throws SQLException {
+        xSql = "select Count(*) from Users\n"
+                + "where (-1 = ? or Role = ?)\n"
+                + "and ('' = ? or UserName like ?)";
+
+        ps = con.prepareStatement(xSql);
+        ps.setInt(1, role);
+        ps.setInt(2, role);
+        ps.setString(3, "%" + name + "%");
+        ps.setString(4, "%" + name + "%");
+
+        rs = ps.executeQuery();
+        return rs.next() ? rs.getInt(1) : -1;
+    }
 }
