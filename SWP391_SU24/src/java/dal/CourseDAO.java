@@ -167,6 +167,30 @@ public class CourseDAO extends MyDAO {
         return String.join(", ", sorter);
     }
 
+    public List<Course> getAssignedCoursesById(int userID) {
+        ArrayList<Course> list = new ArrayList<>();
+        xSql = "SELECT *\n"
+                + "FROM Courses c \n"
+                + "JOIN Semesters s ON s.SemesterID = c.SemesterID \n"
+                + "JOIN Categories ON Categories.CategoryID = Courses.CategoryID \n"
+                + "WHERE c.CourseId IN (\n"
+                + "  SELECT CourseId\n"
+                + "  FROM CourseAssignment\n"
+                + "  WHERE UserId = ?\n"
+                + ");";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(fromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public Course fromResultSet(ResultSet rs) throws SQLException {
         // Must join with category and semester
         Semester semester = new Semester(rs.getInt("SemesterID"), rs.getString("SemesterDescription"));
