@@ -54,7 +54,9 @@
                     </span>
                     <div class="dropdown-content" id="myDropdown">
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/profile"><i class="fa-solid fa-user"></i>  Profile</a>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/mycourse"><i class="fa-solid fa-book"></i>  My Course</a>
+                        <c:if test="${user.role == '1'}">
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/mycourse"><i class="fa-solid fa-book"></i>  My Course</a>
+                        </c:if>
                         <c:if test="${user.role == '4'}">
                             <a class="dropdown-item admin-item" href="${pageContext.request.contextPath}/admin"><i class="fa-solid fa-pen-to-square"></i> Administration</a>
                         </c:if>
@@ -62,7 +64,7 @@
                             <a class="dropdown-item admin-item" href="${pageContext.request.contextPath}/manager"><i class="fa-solid fa-pen-to-square"></i> Manage Courses</a>
                         </c:if>
                         <c:if test="${user.role == '2'}">
-                            <a class="dropdown-item admin-item" href="${pageContext.request.contextPath}/teacher"><i class="fa-solid fa-pen-to-square"></i> Create Quiz</a>
+                            <a class="dropdown-item admin-item" href="${pageContext.request.contextPath}/teacher"><i class="fa-solid fa-pen-to-square"></i>View Course</a>
                         </c:if>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/logout"><i class="fa-solid fa-right-from-bracket"></i>  Logout</a>
                     </div>
