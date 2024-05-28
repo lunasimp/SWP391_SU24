@@ -8,6 +8,10 @@
         <filter-name>TeacherFilter</filter-name>
         <url-pattern>/teacher</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>TeacherFilter</filter-name>
+        <url-pattern>/teacher/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>SampleServlet</servlet-name>
         <servlet-class>controllers.SampleServlet</servlet-class>
