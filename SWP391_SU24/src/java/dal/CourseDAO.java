@@ -150,7 +150,7 @@ public class CourseDAO extends MyDAO {
         xSql = "SELECT *\n"
                 + "FROM Courses c \n"
                 + "JOIN Semesters s ON s.SemesterID = c.SemesterID \n"
-                + "JOIN Categories ON Categories.CategoryID = Courses.CategoryID \n"
+                + "JOIN Categories ct ON ct.CategoryID = c.CategoryID \n"
                 + "WHERE c.CourseId IN (\n"
                 + "  SELECT CourseId\n"
                 + "  FROM CourseAssignment\n"

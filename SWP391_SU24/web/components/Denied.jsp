@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Denied
-    Created on : Jun 2, 2023, 2:12:16 AM
-    Author     : Viet
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
