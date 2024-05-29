@@ -82,16 +82,24 @@ public class TeacherController extends HttpServlet {
         try {
             User loggedUser = (User) request.getSession().getAttribute("user");
             List<Course> courseByIdData = cd.getAssignedCoursesById(loggedUser.getUserID());
+            String filterValue = request.getParameter("filterValue");
 
-            int listCount = cd.searchCoursesCount(search, category, semester, false);
+            List<Course> list = cd.searchCourses(search, category, semester, true, sortName, sortPublishDate, page, pageSize);
+            int listCount = cd.searchCoursesCount(search, category, semester, true);
             int pageCount = (int) Math.ceil(listCount / (float) pageSize);
 
-            request.setAttribute("designerCourses", courseByIdData);
+            if (filterValue == null || filterValue.isEmpty()) {
+                request.setAttribute("courseData", list);
+            } else if (filterValue.equals("assigned")) {
+                request.setAttribute("designerCourses", courseByIdData);
+            }
 
+            request.setAttribute("courseData", list);
             request.setAttribute("pageCount", pageCount);
             request.setAttribute("listCount", listCount);
             request.setAttribute("categories", catDao.getAllCategories());
             request.setAttribute("semesters", semesterDao.getAllSemesters());
+            request.setAttribute("filterValue", filterValue);
 
             request.getRequestDispatcher("teacher/teacher.jsp").forward(request, response);
         } catch (SQLException ex) {

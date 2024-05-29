@@ -45,8 +45,19 @@
             <div class="admin-content">
                 <div class="form-container">
                     <div class="title">
-                        <h1>Your Courses</h1>
+                        <c:choose>
+                            <c:when test="${filterValue == 'assigned'}">
+                                <h1>Your Courses</h1>
+                            </c:when>
+                            <c:otherwise>
+                                <h1>All Courses</h1>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
+                    <div class="filter-btn">
+                        <button name="filterValue" value="all" onclick="selectFilter(event)" class="filter-button">All Courses</button>
+                        <button name="filterValue" value="assigned" onclick="selectFilter(event)" class="filter-button">Assigned User Courses</button>
+                    </div> 
                     <%@include file="/components/searchBar.jspf" %>
                     <div class="filters">
                         <div>
@@ -75,28 +86,51 @@
                         <thead>
                             <tr>
                                 <th class="cel-1">Course</th>
-                                <th>Option</th>
+                                    <c:choose>
+                                        <c:when test="${filterValue == 'assigned'}">
+                                        <th>Option</th>
+                                        </c:when>
+                                    </c:choose>
                             </tr>
                         </thead>
                         <tbody>
-                                <c:forEach items="${designerCourses}" var="x">
-                                    <tr>
-                                        <td>
-                                            <div class="course-inf">
-                                                <img src="${x.imgUrl}" alt="courseImage"/>
-                                                <div class="inf">
-                                                    <p>${x.title}</p>
-                                                    <small>Publish Date: ${x.publishDate}</small>
+                            <c:choose>
+                                <c:when test="${filterValue eq 'assigned'}">
+                                    <c:forEach items="${designerCourses}" var="x">
+                                        <tr>
+                                            <td>
+                                                <div class="course-inf">
+                                                    <img src="${x.imgUrl}" alt="courseImage"/>
+                                                    <div class="inf">
+                                                        <p>${x.title}</p>
+                                                        <small>Publish Date: ${x.publishDate}</small>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="options">
-                                                <a href="${pageContext.request.contextPath}/admin/edit-course?courseId=${x.id}">Edit</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                            </td>
+                                            <td>
+                                                <div class="options">
+                                                    <a href="${pageContext.request.contextPath}/admin/edit-course?courseId=${x.id}">Edit</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach items="${courseData}" var="i">
+                                        <tr>
+                                            <td>
+                                                <div class="course-inf">
+                                                    <img src="${i.imgUrl}" alt="courseImage"/>
+                                                    <div class="inf">
+                                                        <p>${i.title}</p>
+                                                        <small>Publish Date: ${i.publishDate}</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
                         </tbody>
                     </table>
                     <%@include file="/components/courseListingPagination.jspf" %>
@@ -116,6 +150,23 @@
             button.addEventListener('click', selectFilter);
         });
     });
+
+    function selectFilter(e) {
+        let target = e.target;
+        // Remove 'selected' class from all filter buttons
+        let filterButtons = document.querySelectorAll('.filter-button');
+        filterButtons.forEach(function (button) {
+            button.classList.remove('selected');
+        });
+        // Add 'selected' class to the clicked filter button
+        target.classList.add('selected');
+        // Get the value of the selected filter
+        let name = target.getAttribute('name');
+        let value = target.getAttribute('value');
+        applyFilter(name, value);
+        e.preventDefault();
+    }
+
 
     function applyFilter(name, value) {
         let searches = new URLSearchParams(location.search);
