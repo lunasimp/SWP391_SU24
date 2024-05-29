@@ -49,7 +49,7 @@ public class CourseDAO extends MyDAO {
             String sortName, String sortPublishDate,
             int page, int pageSize) throws SQLException {
         xSql = "select * " + searchCourseQuery
-                + (showHiddenCourses ? " " : " and c.IsDiscontinued = 0 and c.PublishDate is not null ")
+                + (showHiddenCourses ? " " : " and and c.PublishDate is not null ")
                 + "order by " + getSortQuery(sortName, sortPublishDate) + " "
                 + "offset ? rows fetch next ? rows only";
 
