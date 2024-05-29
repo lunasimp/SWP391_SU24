@@ -1,6 +1,6 @@
 <%-- 
     Document   : userManagement
-    Created on : May 30, 2023, 9:21:58 AM
+    Created on : May 20, 2024, 9:21:58 AM
     Author     : AnNT
 --%>
 
@@ -56,8 +56,8 @@
                                     <td>${x.email}</td>
                                     <td>${UserUtils.getRoleName(x.role)}</td>
                                     <td>${x.restrictUntil}</td>
-                                    <td>0 course</td>
-                                    <td><a class="btn-detail" href="#">Detail</a></td>
+                                    <td>${enrollMap[x.userID]} course</td>
+                                    <td><a class="btn-detail" href="/admin/userDetail?id=${x.userID}">Detail</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
