@@ -19,19 +19,13 @@
     <body>
         <div class="container">
             <div class="btn-back_home">
-                <p>
-                    <a class="back_home-detail" href="home"><i class="fa fa-arrow-left" aria-hidden="true"></i> Homepage</a>
-                </p>
             </div>
             <div class="container-form">
                 <div class="left-part_space"></div>
                 <div class="left_part">
-                    <div class="left-heading">
-                        <span>One Step Closer To your dream</span>
-                    </div>
-                    <div class="left-des">
-                        <span>A free E-Learning service that is ready to help you become an expert</span>
-                    </div>
+                    <h6 class="left-heading">
+                        <span>FPT EDUCATION</span>
+                    </h6>
                 </div>
                 <div class="right_part">
                     <div class="spacing_top"></div>
@@ -48,14 +42,13 @@
                             <input id="password" name="password" value="${password==null?'12345678':password}" type="password" placeholder="Password" class="form-control">
                             <span class="form-message"></span>
                         </div>
-                        <span class="validate-message">${validate}</span>
-                        <div class="form-remember">
-                            <input id="remember-account" name="remember-account" type="checkbox" checked value="on" class="check-remember">
-                            <label for="remember-account" class="remember-detail"> Remember me</label>
+                        <div>
+                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_SU24/login&response_type=code&client_id=751407796002-7ojn2teuinouq43pkr7lg6bjjsvapa56.apps.googleusercontent.com&approval_prompt=force" class="google">
+                                    <span><i class="fab fa-google-plus-g"></i> Login with Google</span></a>
                         </div>
-                        <button id="form-submit" class="form-submit">Login</button>
-                        <div class="logreg-link">
-                            <span>Don't have an account? <a href="register">Register now</a></span>
+                        <span class="validate-message">${validate}</span>
+                        <div>
+                            <button id="form-submit" class="form-submit">Login</button>
                         </div>
                     </form>
                     <div class="spacing_bottom"></div>
