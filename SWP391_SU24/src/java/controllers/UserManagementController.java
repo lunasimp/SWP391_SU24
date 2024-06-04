@@ -46,13 +46,13 @@ public class UserManagementController extends HttpServlet {
             UserDAO userDAO = new UserDAO();
             
             List<User> users = userDAO.searchUsers(userSearch, role, page, size);
-            Map<Integer, Integer> map = getCourseEnrolled(users);
+//            Map<Integer, Integer> map = getCourseEnrolled(users);
             
             request.setAttribute("pageCount", Math.ceil(userDAO.searchUserCount(userSearch, role) / (float) size));
             request.setAttribute("listCount", size);
             
             request.setAttribute("users", users);
-            request.setAttribute("enrollMap", map);
+//            request.setAttribute("enrollMap", map);
             request.getRequestDispatcher("/admin/userManagement.jsp").include(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(UserManagementController.class.getName()).log(Level.SEVERE, null, ex);

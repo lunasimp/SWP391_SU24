@@ -30,8 +30,8 @@
         </div>
         <nav class="nav-header">
             <ul>
-                <li><a href="${pageContext.request.contextPath}/">HOME</a></li>
-                <li><a href="${pageContext.request.contextPath}/">ABOUT US</a></li>
+                <li><a href="${pageContext.request.contextPath}/home">HOME</a></li>
+                <li><a href="${pageContext.request.contextPath}/home">ABOUT US</a></li>
                 <li><a href="${pageContext.request.contextPath}/mycourse">MY COURSE</a></li>
             </ul>
         </nav>
