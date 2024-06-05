@@ -16,26 +16,7 @@ import java.util.List;
  */
 public class UserDAO extends MyDAO {
 
-    public List<User> checkUser(String email, String passWord) {
-        List<User> t = new ArrayList<>();
-        xSql = "select * from Users where Email = ? and [Password] = ?";
-        try {
-            ps = con.prepareStatement(xSql);
-            ps.setString(1, email);
-            ps.setString(2, passWord);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                t.add(fromResultSet(rs));
-            }
-            ps.execute();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return t;
-    }
-
-     public List<User> checkUserByEmail(String email) throws SQLException {
+     public List<User> checkUser(String email) throws SQLException {
         List<User> t = new ArrayList<>();
         xSql = "select * from Users where Email = ?";
         try {
@@ -53,19 +34,7 @@ public class UserDAO extends MyDAO {
         return t;
     }
     
-    public User getUser(String email, String pass) throws SQLException {
-        xSql = "select * from Users where Email = ? and [Password] = ?";
-        ps = con.prepareStatement(xSql);
-        ps.setString(1, email);
-        ps.setString(2, pass);
-        rs = ps.executeQuery();
-        if (rs.next()) {
-            return fromResultSet(rs);
-        }
-        return null;
-    }
-
-   public User getUserByEmail(String email) throws SQLException {
+   public User getUser(String email) throws SQLException {
         xSql = "select * from Users where Email = ?";
         ps = con.prepareStatement(xSql);
         ps.setString(1, email);
@@ -76,33 +45,7 @@ public class UserDAO extends MyDAO {
         return null;
     }
 
-    public boolean checkAdmin(String email, String passWord) {
-        List<User> t = new ArrayList<>();
-        xSql = "select * from Users where Email = ? and [Password] = ?";
-        try {
-            ps = con.prepareStatement(xSql);
-            ps.setString(1, email);
-            ps.setString(2, passWord);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                t.add(fromResultSet(rs));
-            }
-            if (!t.isEmpty()) {
-                for (int i = 0; i < t.size(); i++) {
-                    if (t.get(i).getRole() == 4) {
-                        return true;
-                    }
-                }
-            }
-            ps.execute();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean checkAdminUsingEmail(String email) {
+    public boolean checkAdmin(String email) {
         List<User> t = new ArrayList<>();
         xSql = "select * from Users where Email = ?";
         try {
@@ -126,34 +69,8 @@ public class UserDAO extends MyDAO {
         }
         return false;
     }
-    
-    public boolean checkManager(String email, String passWord) {
-        List<User> t = new ArrayList<>();
-        xSql = "select * from Users where Email = ? and [Password] = ?";
-        try {
-            ps = con.prepareStatement(xSql);
-            ps.setString(1, email);
-            ps.setString(2, passWord);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                t.add(fromResultSet(rs));
-            }
-            if (!t.isEmpty()) {
-                for (int i = 0; i < t.size(); i++) {
-                    if (t.get(i).getRole() == 3) {
-                        return true;
-                    }
-                }
-            }
-            ps.execute();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
-    public boolean checkManagerUsingEmail(String email) {
+    public boolean checkManager(String email) {
         List<User> t = new ArrayList<>();
         xSql = "select * from Users where Email = ?";
         try {
@@ -177,34 +94,8 @@ public class UserDAO extends MyDAO {
         }
         return false;
     }
-    
-    public boolean checkTeacher(String email, String passWord) {
-        List<User> t = new ArrayList<>();
-        xSql = "select * from Users where Email = ? and [Password] = ?";
-        try {
-            ps = con.prepareStatement(xSql);
-            ps.setString(1, email);
-            ps.setString(2, passWord);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                t.add(fromResultSet(rs));
-            }
-            if (!t.isEmpty()) {
-                for (int i = 0; i < t.size(); i++) {
-                    if (t.get(i).getRole() == 2) {
-                        return true;
-                    }
-                }
-            }
-            ps.execute();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    
-    public boolean checkTeacherUsingEmail(String email) {
+      
+    public boolean checkTeacher(String email) {
         List<User> t = new ArrayList<>();
         xSql = "select * from Users where Email = ?";
         try {
@@ -234,13 +125,12 @@ public class UserDAO extends MyDAO {
                 rs.getInt(1),
                 rs.getString(2),
                 rs.getString(3),
-                rs.getString(4),
-                rs.getInt(5),
-                rs.getDate(6),
-                rs.getBoolean(7),
-                rs.getString(8),
-                rs.getDate(9),
-                rs.getString(10)
+                rs.getInt(4),
+                rs.getDate(5),
+                rs.getBoolean(6),
+                rs.getString(7),
+                rs.getDate(8),
+                rs.getString(9)
         );
     }
 

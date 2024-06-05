@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [SWP391_SU24]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Database [SWP391_SU24]    Script Date: 6/5/2024 2:32:29 PM ******/
 CREATE DATABASE [SWP391_SU24]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,7 +82,7 @@ ALTER DATABASE [SWP391_SU24] SET QUERY_STORE = OFF
 GO
 USE [SWP391_SU24]
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Categories]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,7 +96,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Choices]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Choices]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -112,7 +112,23 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Classes]    Script Date: 6/5/2024 2:32:29 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Classes](
+	[ClassID] [int] IDENTITY(1,1) NOT NULL,
+	[ClassName] [nvarchar](420) NOT NULL,
+	[CourseID] [int] NOT NULL,
+	[SemesterID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ClassID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -127,7 +143,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Courses]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +163,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamPapers]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -166,7 +182,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exams]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Exams]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,7 +198,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -197,7 +213,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Semesters]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[Semesters]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -205,13 +221,15 @@ GO
 CREATE TABLE [dbo].[Semesters](
 	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
 	[SemesterDescription] [nvarchar](69) NOT NULL,
+	[StartDate] [date] NULL,
+	[EndDate] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[SemesterID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAnswers]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,7 +245,22 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 5/28/2024 11:46:12 PM ******/
+/****** Object:  Table [dbo].[UserAssignment]    Script Date: 6/5/2024 2:32:29 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserAssignment](
+	[UserID] [int] NOT NULL,
+	[ClassID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC,
+	[ClassID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 6/5/2024 2:32:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -236,7 +269,6 @@ CREATE TABLE [dbo].[Users](
 	[UserID] [int] IDENTITY(1,1) NOT NULL,
 	[UserName] [nvarchar](420) NOT NULL,
 	[Email] [varchar](420) NOT NULL,
-	[Password] [varchar](69) NOT NULL,
 	[Role] [int] NOT NULL,
 	[DOB] [date] NULL,
 	[Gender] [bit] NULL,
@@ -343,6 +375,22 @@ INSERT [dbo].[Choices] ([ChoiceID], [QuestionID], [Description], [IsTrueAnswer])
 GO
 SET IDENTITY_INSERT [dbo].[Choices] OFF
 GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 1)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 2)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 3)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 4)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 5)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 6)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 7)
+GO
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 8)
+GO
 SET IDENTITY_INSERT [dbo].[Courses] ON 
 GO
 INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (1, N'https://anhcocvang.com/static/media/SWP391.5fdddbd15263f212b41a.png', N'SWP391', N'Application development project', CAST(N'2023-06-16' AS Date), N'Bùi Đình Chiến (FSE HN - Giảng viên CF)', 1, 1)
@@ -397,23 +445,25 @@ SET IDENTITY_INSERT [dbo].[Questions] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] ON 
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (1, N'SUMMER 2024')
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (1, N'SUMMER 2024', NULL, NULL)
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (2, N'SPRING 2024')
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (2, N'SPRING 2024', NULL, NULL)
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (3, N'FALL 2023')
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (3, N'FALL 2023', NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Users] ON 
 GO
-INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Password], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (1, N'admin', N'admin@gmail.com', N'6a5aeb1ea832832a9969a562357994ba', 4, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (1, N'admin', N'admin@gmail.com', 4, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Password], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (2, N'manager', N'manager@gmail.com', N'6a5aeb1ea832832a9969a562357994ba', 3, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (2, N'manager', N'manager@gmail.com', 3, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Password], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (3, N'teacher', N'teacher@gmail.com', N'6a5aeb1ea832832a9969a562357994ba', 2, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (3, N'teacher', N'teacher@gmail.com', 2, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Password], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (4, N'user', N'user@gmail.com', N'6a5aeb1ea832832a9969a562357994ba', 1, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (4, N'user', N'user@gmail.com', 1, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (5, N'lamtung', N'tungnlhe180026@fpt.edu.vn', 2, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Users] OFF
 GO
@@ -429,6 +479,24 @@ ALTER TABLE [dbo].[Choices]  WITH CHECK ADD FOREIGN KEY([QuestionID])
 REFERENCES [dbo].[Questions] ([QuestionID])
 ON DELETE CASCADE
 GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CourseID])
+REFERENCES [dbo].[Courses] ([CourseID])
+GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CourseID])
+REFERENCES [dbo].[Courses] ([CourseID])
+GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CourseID])
+REFERENCES [dbo].[Courses] ([CourseID])
+GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([SemesterID])
+REFERENCES [dbo].[Semesters] ([SemesterID])
+GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([SemesterID])
+REFERENCES [dbo].[Semesters] ([SemesterID])
+GO
+ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([SemesterID])
+REFERENCES [dbo].[Semesters] ([SemesterID])
+GO
 ALTER TABLE [dbo].[CourseAssignment]  WITH CHECK ADD FOREIGN KEY([CourseId])
 REFERENCES [dbo].[Courses] ([CourseID])
 ON DELETE CASCADE
@@ -439,6 +507,15 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([CategoryID])
 REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
+REFERENCES [dbo].[Semesters] ([SemesterID])
+GO
+ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
+REFERENCES [dbo].[Semesters] ([SemesterID])
+GO
+ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
+REFERENCES [dbo].[Semesters] ([SemesterID])
 GO
 ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
 REFERENCES [dbo].[Semesters] ([SemesterID])
@@ -465,6 +542,24 @@ GO
 ALTER TABLE [dbo].[UserAnswers]  WITH CHECK ADD FOREIGN KEY([PaperID])
 REFERENCES [dbo].[ExamPapers] ([PaperID])
 ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([ClassID])
+REFERENCES [dbo].[Classes] ([ClassID])
+GO
+ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([ClassID])
+REFERENCES [dbo].[Classes] ([ClassID])
+GO
+ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([ClassID])
+REFERENCES [dbo].[Classes] ([ClassID])
+GO
+ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
 GO
 ALTER TABLE [dbo].[ExamPapers]  WITH CHECK ADD CHECK  (([State]=(2) OR [State]=(1)))
 GO

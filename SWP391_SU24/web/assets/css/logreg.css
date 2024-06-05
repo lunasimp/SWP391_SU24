@@ -2,17 +2,6 @@ body {
     zoom: 125%;
 }
 
-.btn-back_home {
-    padding: 14px 0 8px 122px;
-    color: rgb(80, 70, 70);
-    font-size: 17px;
-}
-
-.back_home-detail {
-    text-decoration: none;
-    color: rgb(57, 63, 63);
-}
-
 .container-form {
     width: 100%;
     display: flex;

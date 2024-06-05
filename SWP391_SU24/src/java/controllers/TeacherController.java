@@ -65,7 +65,6 @@ public class TeacherController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int pageSize = 5;
-        int page = ParseUtils.parseIntWithDefault(request.getParameter("page"), 1) - 1;
         int category = ParseUtils.parseIntWithDefault(request.getParameter("category"), -1);
         int semester = ParseUtils.parseIntWithDefault(request.getParameter("semester"), -1);
 
@@ -73,8 +72,6 @@ public class TeacherController extends HttpServlet {
         if (search == null) {
             search = "";
         }
-        String sortName = request.getParameter("sortName");
-        String sortPublishDate = request.getParameter("sortPublishDate");
 
         CourseDAO cd = new CourseDAO();
         CategoryDAO catDao = new CategoryDAO();
@@ -82,25 +79,16 @@ public class TeacherController extends HttpServlet {
         try {
             User loggedUser = (User) request.getSession().getAttribute("user");
             List<Course> courseByIdData = cd.getAssignedCoursesById(loggedUser.getUserID());
-            String filterValue = request.getParameter("filterValue");
 
-            List<Course> list = cd.searchCourses(search, category, semester, true, sortName, sortPublishDate, page, pageSize);
             int listCount = cd.searchCoursesCount(search, category, semester, true);
             int pageCount = (int) Math.ceil(listCount / (float) pageSize);
+            request.setAttribute("designerCourses", courseByIdData);
 
-            if (filterValue == null || filterValue.isEmpty()) {
-                request.setAttribute("courseData", list);
-            } else if (filterValue.equals("assigned")) {
-                request.setAttribute("designerCourses", courseByIdData);
-            }
-
-            request.setAttribute("courseData", list);
             request.setAttribute("pageCount", pageCount);
             request.setAttribute("listCount", listCount);
             request.setAttribute("categories", catDao.getAllCategories());
             request.setAttribute("semesters", semesterDao.getAllSemesters());
-            request.setAttribute("filterValue", filterValue);
-
+            
             request.getRequestDispatcher("teacher/teacher.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
