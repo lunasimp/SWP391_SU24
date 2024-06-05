@@ -62,26 +62,19 @@
                         <h1>Your Courses</h1>
                     </div>
                     <div class="filters">
-                        <div>
-                            Categories:  
-                            <select name="category" value="${empty param.category ? -1 : param.category}" onchange="applyFilter('category', event.target.value)">
-                                <option value="-1">All</option>
-                                <c:forEach var="item" items="${categories}">
-                                    <option value="${item.id}" ${category == item.id ? 'selected' : ''}> ${item.description}</option>  
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div>
-                            Semesters:
-                            <select name="semester" value="${empty param.semester ? -1 : param.semester}" onchange="applyFilter('semester', event.target.value)">
-                                <option value="-1">All</option>
-                                <c:forEach var="item" items="${semesters}">
-                                    <option value="${item.id}" ${semester == item.id ? "selected" : ''} >
-                                        ${item.description}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                        <form method="get" action="${pageContext.request.contextPath}/teacher">
+                            <div>
+                                Semesters:
+                                <select name="semester" value="${empty param.semester ? -1 : param.semester}" onchange="this.form.submit()">
+                                    <option value="-1">All</option>
+                                    <c:forEach var="item" items="${semesters}">
+                                        <option value="${item.id}" ${semester == item.id ? "selected" : ''} >
+                                            ${item.description}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </form>
                     </div>
 
                     <table>
@@ -98,61 +91,25 @@
                                         <div class="course-inf">
                                             <img src="${x.imgUrl}" alt="courseImage"/>
                                             <div class="inf">
-                                                <p>${x.title}</p>
-                                                <small>Publish Date: ${x.publishDate}</small>
+                                                <p>${x.title}-${x.description}</p>
+                                                <small>Publish Date: ${x.publishDate}</small><br>
+                                                <small>Lecturer: ${x.lecturer}</small>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="options">
-                                            <a href="${pageContext.request.contextPath}/teacher/view-course?courseId=${i.id}"><i class="fa-solid fa-pen-to-square"></i>View</a>
-                                            <a style="background-color: beige" href="${pageContext.request.contextPath}/teacher/assign-course?courseId=${i.id}"><i class="fa-solid fa-user-pen"></i>Assign</a>
+                                            <a href="${pageContext.request.contextPath}/teacher/view-course?courseId=${x.id}"><i class="fa-solid fa-pen-to-square"></i>View</a>
+                                            <a style="background-color: beige" href="${pageContext.request.contextPath}/teacher/assign-course?courseId=${x.id}"><i class="fa-solid fa-user-pen"></i>Assign</a>
                                         </div>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
-                    <%@include file="/components/courseListingPagination.jspf" %>
                 </div>
             </div>       
         </div>
-
         <%@include file="/components/footer.jspf" %>
     </body>
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Gắn sự kiện nghe (event listener) cho các phần tử filter
-        const filterButtons = document.querySelectorAll('[name="filterValue"]');
-        filterButtons.forEach(function (button) {
-            button.addEventListener('click', selectFilter);
-        });
-    });
-
-    function selectFilter(e) {
-        let target = e.target;
-        // Remove 'selected' class from all filter buttons
-        let filterButtons = document.querySelectorAll('.filter-button');
-        filterButtons.forEach(function (button) {
-            button.classList.remove('selected');
-        });
-        // Add 'selected' class to the clicked filter button
-        target.classList.add('selected');
-        // Get the value of the selected filter
-        let name = target.getAttribute('name');
-        let value = target.getAttribute('value');
-        applyFilter(name, value);
-        e.preventDefault();
-    }
-
-
-    function applyFilter(name, value) {
-        let searches = new URLSearchParams(location.search);
-        searches.set(name, value);
-        location.search = searches.toString();
-    }
-
-
-</script>

@@ -19,12 +19,11 @@ public class Course {
     private Date publishDate;
     private String lecturer;
     private Semester semester;
-    private Category category;
 
     public Course() {
     }
 
-    public Course(int id, String title, String description, String imgUrl, Date publishDate, String lecturer, Semester semester, Category category) {
+    public Course(int id, String title, String description, String imgUrl, Date publishDate, String lecturer, Semester semester) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -32,7 +31,6 @@ public class Course {
         this.publishDate = publishDate;
         this.lecturer = lecturer;
         this.semester = semester;
-        this.category = category;
     }
 
     public int getId() {
@@ -91,17 +89,9 @@ public class Course {
         this.semester = semester;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     @Override
     public String toString() {
-        return "Course{" + "id=" + id + ", title=" + title + ", description=" + description + ", imgUrl=" + imgUrl + ", publishDate=" + publishDate + ", lecturer=" + lecturer + ", semester=" + semester + ", category=" + category + '}';
+        return "Course{" + "id=" + id + ", title=" + title + ", description=" + description + ", imgUrl=" + imgUrl + ", publishDate=" + publishDate + ", lecturer=" + lecturer + ", semester=" + semester + '}';
     }
 
 }

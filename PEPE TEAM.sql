@@ -1,7 +1,7 @@
 
 USE [master]
 GO
-/****** Object:  Database [SWP391_SU24]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Database [SWP391_SU24]    Script Date: 6/5/2024 8:37:45 PM ******/
 CREATE DATABASE [SWP391_SU24]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -83,21 +83,7 @@ ALTER DATABASE [SWP391_SU24] SET QUERY_STORE = OFF
 GO
 USE [SWP391_SU24]
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 6/5/2024 2:32:29 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Categories](
-	[CategoryID] [int] IDENTITY(1,1) NOT NULL,
-	[CategoryDescription] [nvarchar](69) NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[CategoryID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Choices]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[Choices]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,23 +99,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Classes]    Script Date: 6/5/2024 2:32:29 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Classes](
-	[ClassID] [int] IDENTITY(1,1) NOT NULL,
-	[ClassName] [nvarchar](420) NOT NULL,
-	[CourseID] [int] NOT NULL,
-	[SemesterID] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[ClassID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -144,7 +114,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[Courses]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -157,14 +127,13 @@ CREATE TABLE [dbo].[Courses](
 	[PublishDate] [date] NULL,
 	[Lecturer] [nvarchar](69) NOT NULL,
 	[SemesterID] [int] NULL,
-	[CategoryID] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[CourseID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +152,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exams]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[Exams]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,7 +168,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -214,7 +183,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Semesters]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[Semesters]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,15 +191,13 @@ GO
 CREATE TABLE [dbo].[Semesters](
 	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
 	[SemesterDescription] [nvarchar](69) NOT NULL,
-	[StartDate] [date] NULL,
-	[EndDate] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[SemesterID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -246,22 +213,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAssignment]    Script Date: 6/5/2024 2:32:29 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[UserAssignment](
-	[UserID] [int] NOT NULL,
-	[ClassID] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[UserID] ASC,
-	[ClassID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Users]    Script Date: 6/5/2024 2:32:29 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -281,16 +233,6 @@ PRIMARY KEY CLUSTERED
 	[UserID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
-SET IDENTITY_INSERT [dbo].[Categories] ON 
-GO
-INSERT [dbo].[Categories] ([CategoryID], [CategoryDescription]) VALUES (1, N'Programing')
-GO
-INSERT [dbo].[Categories] ([CategoryID], [CategoryDescription]) VALUES (2, N'Design')
-GO
-INSERT [dbo].[Categories] ([CategoryID], [CategoryDescription]) VALUES (3, N'Marketing')
-GO
-SET IDENTITY_INSERT [dbo].[Categories] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Choices] ON 
 GO
@@ -382,35 +324,27 @@ INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 2)
 GO
 INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 3)
 GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 4)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 5)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 6)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 7)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 8)
+INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 9)
 GO
 SET IDENTITY_INSERT [dbo].[Courses] ON 
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (1, N'https://anhcocvang.com/static/media/SWP391.5fdddbd15263f212b41a.png', N'SWP391', N'Application development project', CAST(N'2023-06-16' AS Date), N'Bùi Đình Chiến (FSE HN - Giảng viên CF)', 1, 1)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (1, N'https://anhcocvang.com/static/media/SWP391.5fdddbd15263f212b41a.png', N'SWP391', N'Application development project', CAST(N'2023-06-16' AS Date), N'Bùi Đình Chiến (FSE HN - Giảng viên CF)', 1)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (2, N'https://anhcocvang.com/static/media/PRJ301.9bb0efe8026c7b713544.png', N'PRJ301', N'Java Web Application Development', CAST(N'2023-01-01' AS Date), N'Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 1, 1)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (2, N'https://anhcocvang.com/static/media/PRJ301.9bb0efe8026c7b713544.png', N'PRJ301', N'Java Web Application Development', CAST(N'2023-01-01' AS Date), N'Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 1)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (3, N'https://images.shiksha.com/mediadata/ugcDocuments/images/wordpressImages/2022_08_Understanding-Break-Statement-in-C-24.jpg', N'ACC101', N'Principles of Accounting', CAST(N'2023-11-05' AS Date), N'Phan Trường Lâm (FSE HN - Giảng viên CF)', 3, 1)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (3, N'https://images.shiksha.com/mediadata/ugcDocuments/images/wordpressImages/2022_08_Understanding-Break-Statement-in-C-24.jpg', N'ACC101', N'Principles of Accounting', CAST(N'2023-11-05' AS Date), N'Phan Trường Lâm (FSE HN - Giảng viên CF)', 3)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (4, N'https://thuvienso.hoasen.edu.vn/bitstream/handle/123456789/7356/71.jpg?sequence=3&isAllowed=y', N'MAS202', N'Applied Statistics for Business', CAST(N'2022-03-07' AS Date), N'Thành Trung Đinh', 1, 3)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (4, N'https://thuvienso.hoasen.edu.vn/bitstream/handle/123456789/7356/71.jpg?sequence=3&isAllowed=y', N'MAS202', N'Applied Statistics for Business', CAST(N'2022-03-07' AS Date), N'Thành Trung Đinh', 1)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (5, N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUsnXxxnW_XjosAEGoZhotT7c4OHv9GDmChKMyBqqSww&s', N'FIN201', N'Monetary Economics and Global Economy', CAST(N'2022-10-12' AS Date), N'Nguyễn Minh Hải (FSB HN)', 3, 3)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (5, N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUsnXxxnW_XjosAEGoZhotT7c4OHv9GDmChKMyBqqSww&s', N'FIN201', N'Monetary Economics and Global Economy', CAST(N'2022-10-12' AS Date), N'Nguyễn Minh Hải (FSB HN)', 3)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (6, N'https://kent.vn/wp-content/uploads/2019/08/typography1.png', N'TPG203', N'Basic typography & Layout', CAST(N'2022-10-12' AS Date), N'Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 2, 2)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (6, N'https://kent.vn/wp-content/uploads/2019/08/typography1.png', N'TPG203', N'Basic typography & Layout', CAST(N'2022-10-12' AS Date), N'Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 2)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (7, N'https://about.easil.com/wp-content/uploads/67_awesome_visual_design_tools_custom-1.jpg', N'DTG102', N'Visual Design Tools', CAST(N'2022-10-05' AS Date), N'Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 3, 2)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (7, N'https://about.easil.com/wp-content/uploads/67_awesome_visual_design_tools_custom-1.jpg', N'DTG102', N'Visual Design Tools', CAST(N'2022-10-05' AS Date), N'Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 3)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (8, N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhxWGoQnWWP2ErfXgXv6yze24fS_LQD727tMBypmjR6w&s', N'ENM301', N'BUSINESS ENGLISH - Level: Intermediate', CAST(N'2022-11-11' AS Date), N'Nguyễn Thị Quỳnh Hoa (FSE HN - Giảng viên Tiếng Anh)', 3, 3)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (8, N'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhxWGoQnWWP2ErfXgXv6yze24fS_LQD727tMBypmjR6w&s', N'ENM301', N'BUSINESS ENGLISH - Level: Intermediate', CAST(N'2022-11-11' AS Date), N'Nguyễn Thị Quỳnh Hoa (FSE HN - Giảng viên Tiếng Anh)', 3)
 GO
-INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID], [CategoryID]) VALUES (9, N'https://www.gcreddy.com/wp-content/uploads/2022/10/Introduction-To-Databases.png', N'DBI202', N'Introduction to Database ', CAST(N'2022-10-11' AS Date), N' Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 1, 1)
+INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescription], [PublishDate], [Lecturer], [SemesterID]) VALUES (9, N'https://www.gcreddy.com/wp-content/uploads/2022/10/Introduction-To-Databases.png', N'DBI202', N'Introduction to Database ', CAST(N'2022-10-11' AS Date), N' Bùi Ngọc Anh (FSE HN - Giảng viên CF)', 1)
 GO
 SET IDENTITY_INSERT [dbo].[Courses] OFF
 GO
@@ -446,11 +380,11 @@ SET IDENTITY_INSERT [dbo].[Questions] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] ON 
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (1, N'SUMMER 2024', NULL, NULL)
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (1, N'SUMMER 2024')
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (2, N'SPRING 2024', NULL, NULL)
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (2, N'SPRING 2024')
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (3, N'FALL 2023', NULL, NULL)
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (3, N'FALL 2023')
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] OFF
 GO
@@ -480,24 +414,6 @@ ALTER TABLE [dbo].[Choices]  WITH CHECK ADD FOREIGN KEY([QuestionID])
 REFERENCES [dbo].[Questions] ([QuestionID])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CourseID])
-REFERENCES [dbo].[Courses] ([CourseID])
-GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CourseID])
-REFERENCES [dbo].[Courses] ([CourseID])
-GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([CourseID])
-REFERENCES [dbo].[Courses] ([CourseID])
-GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([SemesterID])
-REFERENCES [dbo].[Semesters] ([SemesterID])
-GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([SemesterID])
-REFERENCES [dbo].[Semesters] ([SemesterID])
-GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD FOREIGN KEY([SemesterID])
-REFERENCES [dbo].[Semesters] ([SemesterID])
-GO
 ALTER TABLE [dbo].[CourseAssignment]  WITH CHECK ADD FOREIGN KEY([CourseId])
 REFERENCES [dbo].[Courses] ([CourseID])
 ON DELETE CASCADE
@@ -505,18 +421,6 @@ GO
 ALTER TABLE [dbo].[CourseAssignment]  WITH CHECK ADD FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([UserID])
 ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([CategoryID])
-REFERENCES [dbo].[Categories] ([CategoryID])
-GO
-ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
-REFERENCES [dbo].[Semesters] ([SemesterID])
-GO
-ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
-REFERENCES [dbo].[Semesters] ([SemesterID])
-GO
-ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
-REFERENCES [dbo].[Semesters] ([SemesterID])
 GO
 ALTER TABLE [dbo].[Courses]  WITH CHECK ADD FOREIGN KEY([SemesterID])
 REFERENCES [dbo].[Semesters] ([SemesterID])
@@ -543,24 +447,6 @@ GO
 ALTER TABLE [dbo].[UserAnswers]  WITH CHECK ADD FOREIGN KEY([PaperID])
 REFERENCES [dbo].[ExamPapers] ([PaperID])
 ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([ClassID])
-REFERENCES [dbo].[Classes] ([ClassID])
-GO
-ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([ClassID])
-REFERENCES [dbo].[Classes] ([ClassID])
-GO
-ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([ClassID])
-REFERENCES [dbo].[Classes] ([ClassID])
-GO
-ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([UserID])
-REFERENCES [dbo].[Users] ([UserID])
-GO
-ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([UserID])
-REFERENCES [dbo].[Users] ([UserID])
-GO
-ALTER TABLE [dbo].[UserAssignment]  WITH CHECK ADD FOREIGN KEY([UserID])
-REFERENCES [dbo].[Users] ([UserID])
 GO
 ALTER TABLE [dbo].[ExamPapers]  WITH CHECK ADD CHECK  (([State]=(2) OR [State]=(1)))
 GO
