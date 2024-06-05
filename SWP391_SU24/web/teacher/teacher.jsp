@@ -29,6 +29,19 @@
             background-color: #333333;
             color: #ffffff;
         }
+
+        .title {
+            display: flex;
+            align-content: flex-start;
+            align-items: center;
+            justify-content: center;
+        }
+        .title a{
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #99ff66;
+        }
+
     </style>
 
     <html>
@@ -41,24 +54,13 @@
     <body>
         <%@include file="/components/header.jspf" %>
         <div class="grid">
-            <%@include file="/components/adminNavBar.jspf" %>
+            <div class="admin-sidebar">
+            </div>
             <div class="admin-content">
                 <div class="form-container">
                     <div class="title">
-                        <c:choose>
-                            <c:when test="${filterValue == 'assigned'}">
-                                <h1>Your Courses</h1>
-                            </c:when>
-                            <c:otherwise>
-                                <h1>All Courses</h1>
-                            </c:otherwise>
-                        </c:choose>
+                        <h1>Your Courses</h1>
                     </div>
-                    <div class="filter-btn">
-                        <button name="filterValue" value="all" onclick="selectFilter(event)" class="filter-button">All Courses</button>
-                        <button name="filterValue" value="assigned" onclick="selectFilter(event)" class="filter-button">Assigned User Courses</button>
-                    </div> 
-                    <%@include file="/components/searchBar.jspf" %>
                     <div class="filters">
                         <div>
                             Categories:  
@@ -85,52 +87,30 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="cel-1">Course</th>
-                                    <c:choose>
-                                        <c:when test="${filterValue == 'assigned'}">
-                                        <th>Option</th>
-                                        </c:when>
-                                    </c:choose>
+                                <th class="cel-1">Courses</th>
+                                <th>Options</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:choose>
-                                <c:when test="${filterValue eq 'assigned'}">
-                                    <c:forEach items="${designerCourses}" var="x">
-                                        <tr>
-                                            <td>
-                                                <div class="course-inf">
-                                                    <img src="${x.imgUrl}" alt="courseImage"/>
-                                                    <div class="inf">
-                                                        <p>${x.title}</p>
-                                                        <small>Publish Date: ${x.publishDate}</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="options">
-                                                    <a href="${pageContext.request.contextPath}/admin/edit-course?courseId=${x.id}">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:forEach items="${courseData}" var="i">
-                                        <tr>
-                                            <td>
-                                                <div class="course-inf">
-                                                    <img src="${i.imgUrl}" alt="courseImage"/>
-                                                    <div class="inf">
-                                                        <p>${i.title}</p>
-                                                        <small>Publish Date: ${i.publishDate}</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:otherwise>
-                            </c:choose>
+                            <c:forEach items="${designerCourses}" var="x">
+                                <tr>
+                                    <td>
+                                        <div class="course-inf">
+                                            <img src="${x.imgUrl}" alt="courseImage"/>
+                                            <div class="inf">
+                                                <p>${x.title}</p>
+                                                <small>Publish Date: ${x.publishDate}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="options">
+                                            <a href="${pageContext.request.contextPath}/teacher/view-course?courseId=${i.id}"><i class="fa-solid fa-pen-to-square"></i>View</a>
+                                            <a style="background-color: beige" href="${pageContext.request.contextPath}/teacher/assign-course?courseId=${i.id}"><i class="fa-solid fa-user-pen"></i>Assign</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                     <%@include file="/components/courseListingPagination.jspf" %>

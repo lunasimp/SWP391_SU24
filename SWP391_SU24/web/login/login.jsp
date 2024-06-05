@@ -10,16 +10,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>JSP Page</title>
+        <title>Login Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/logreg.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            .google {
+                width: 75%;
+                height: 46px;
+                margin-left: 80px;
+                background: red;
+                border: 1px solid red;
+                color: white;
+                font-size: 22px;
+                cursor: pointer;
+                text-decoration: none; 
+            }
+        </style>
     </head>
     <body>
         <div class="container">
-            <div class="btn-back_home">
-            </div>
             <div class="container-form">
                 <div class="left-part_space"></div>
                 <div class="left_part">
@@ -29,7 +40,6 @@
                 </div>
                 <div class="right_part">
                     <div class="spacing_top"></div>
-                    <form action="login" method="POST" id="form-1">
                         <div class="right-head">
                             <h3 class="right-title">Login</h3>
                             <p class="right-desc">Fill your info</p>
@@ -50,7 +60,6 @@
                         <div>
                             <button id="form-submit" class="form-submit">Login</button>
                         </div>
-                    </form>
                     <div class="spacing_bottom"></div>
                 </div>
                 <div class="right-part_space"></div>

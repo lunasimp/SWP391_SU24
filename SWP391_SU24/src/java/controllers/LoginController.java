@@ -25,7 +25,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import utils.ConstantUtils;
-import utils.EncryptionUtils;
 
 /**
  *
@@ -71,7 +70,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
     if (request.getSession().getAttribute("user") != null) {
         User user = (User) request.getSession().getAttribute("user");
         request.setAttribute("email", user.getEmail());
-        request.setAttribute("password", user.getPassword());
     }
     // Check if there's a validation message
     boolean inValid = "".equals(request.getSession().getAttribute("validate"));
@@ -89,25 +87,25 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
             // Check user's role based on email or any unique identifier
             UserDAO userDAO = new UserDAO();
             String email = googleUser.getEmail();
-            List<User> isUser = userDAO.checkUserByEmail(email);
+            List<User> isUser = userDAO.checkUser(email);
             // If user is found, set session attribute
             if (!isUser.isEmpty()) {
-                User user = userDAO.getUserByEmail(email);
+                User user = userDAO.getUser(email);
                 if (user.getRestrictUntil().compareTo(Date.from(Instant.now())) > 0) {
                     request.getSession().setAttribute("validate", "You have been restricted to use our service! Come back at " + user.getRestrictUntil() + ". Reason: " + user.getRestrictReason());
                     response.sendRedirect(request.getContextPath() + "login");
                     return;
                 }
                 request.getSession().setAttribute("user", user);
-                if (userDAO.checkAdminUsingEmail(email)) {
+                if (userDAO.checkAdmin(email)) {
                     response.sendRedirect("admin");
                     return;
                 }
-                if (userDAO.checkManagerUsingEmail(email)) {
+                if (userDAO.checkManager(email)) {
                     response.sendRedirect("manager");
                     return;
                 }
-                if (userDAO.checkTeacherUsingEmail(email)) {
+                if (userDAO.checkTeacher(email)) {
                     response.sendRedirect("teacher");
                     return;
                 }
@@ -128,44 +126,44 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String validate = "Email or password is incorrect.";
-        UserDAO userDAO = new UserDAO();
-        EncryptionUtils eu = new EncryptionUtils();
-        List<User> isUser = userDAO.checkUser(email, eu.toMD5(password));
-        if (!isUser.isEmpty()) {
-            try {
-                User user = userDAO.getUser(email, eu.toMD5(password));
-                if (user.getRestrictUntil().compareTo(Date.from(Instant.now())) > 0) {
-                    request.getSession().setAttribute("validate", "You have been restricted to use our service! Come back at " + user.getRestrictUntil() + ". Reason: " + user.getRestrictReason());
-                    response.sendRedirect(request.getContextPath() + "login");
-                    return;
-                }
-
-                request.getSession().setAttribute("user", user);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            if (userDAO.checkAdmin(email, eu.toMD5(password))) {
-                response.sendRedirect("admin");
-                return;
-            }
-
-            if (userDAO.checkManager(email, eu.toMD5(password))) {
-                response.sendRedirect("manager");
-                return;
-            }
-
-            if (userDAO.checkTeacher(email, eu.toMD5(password))) {
-                response.sendRedirect("teacher");
-                return;
-            }
-            request.getSession().setAttribute("validate", "");
-            response.sendRedirect(request.getContextPath() + "/home");
-        } else {
-            request.getSession().setAttribute("validate", validate);
-            response.sendRedirect("login");
-        }
+//        String email = request.getParameter("email");
+//        String password = request.getParameter("password");
+//        String validate = "Email or password is incorrect.";
+//        UserDAO userDAO = new UserDAO();
+//        EncryptionUtils eu = new EncryptionUtils();
+//        List<User> isUser = userDAO.checkUser(email, eu.toMD5(password));
+//        if (!isUser.isEmpty()) {
+//            try {
+//                User user = userDAO.getUser(email, eu.toMD5(password));
+//                if (user.getRestrictUntil().compareTo(Date.from(Instant.now())) > 0) {
+//                    request.getSession().setAttribute("validate", "You have been restricted to use our service! Come back at " + user.getRestrictUntil() + ". Reason: " + user.getRestrictReason());
+//                    response.sendRedirect(request.getContextPath() + "login");
+//                    return;
+//                }
+//
+//                request.getSession().setAttribute("user", user);
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//            if (userDAO.checkAdmin(email, eu.toMD5(password))) {
+//                response.sendRedirect("admin");
+//                return;
+//            }
+//
+//            if (userDAO.checkManager(email, eu.toMD5(password))) {
+//                response.sendRedirect("manager");
+//                return;
+//            }
+//
+//            if (userDAO.checkTeacher(email, eu.toMD5(password))) {
+//                response.sendRedirect("teacher");
+//                return;
+//            }
+//            request.getSession().setAttribute("validate", "");
+//            response.sendRedirect(request.getContextPath() + "/home");
+//        } else {
+//            request.getSession().setAttribute("validate", validate);
+//            response.sendRedirect("login");
+//        }
     }
 }

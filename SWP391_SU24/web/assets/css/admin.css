@@ -43,18 +43,6 @@
     padding: 1rem;
 }
 
-.title {
-    display: flex;
-    align-content: flex-start;
-    align-items: center;
-    justify-content: space-between;
-}
-.title a{
-    padding: 10px 20px;
-    border-radius: 4px;
-    background-color: #99ff66;
-}
-
 .filters{
     margin: 1rem 0;
     display: flex;

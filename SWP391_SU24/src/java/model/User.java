@@ -18,7 +18,6 @@ public class User {
     private int userID;
     private String fullName;
     private String email;
-    private String password;
     private int role;
     private Date dob;
     private boolean gender;
@@ -29,11 +28,10 @@ public class User {
     public User() {
     }
 
-    public User(int userID, String fullName, String email, String password, int role, Date dob, boolean gender, String phoneNumber, Date restrictUntil, String restrictReason) {
+    public User(int userID, String fullName, String email, int role, Date dob, boolean gender, String phoneNumber, Date restrictUntil, String restrictReason) {
         this.userID = userID;
         this.fullName = fullName;
         this.email = email;
-        this.password = password;
         this.role = role;
         this.dob = dob;
         this.gender = gender;
@@ -56,14 +54,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFullName() {
@@ -122,40 +112,4 @@ public class User {
         this.restrictReason = restrictReason;
     }
     
-    public String toMD5(String password) {
-        String salt = "emwkqnahd:;wmdLDk";
-        String result = null;
-
-        // Concatenate the password with a salt value
-        password = password + salt;
-
-        try {
-            // Convert the password string to bytes using UTF-8 encoding
-            byte[] dataBytes = password.getBytes("UTF-8");
-
-            // Create an instance of MessageDigest with MD5 algorithm
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // Calculate the hash of the byte array
-            byte[] hashBytes = md.digest(dataBytes);
-
-            // Convert the MD5 bytes to a hexadecimal representation
-            StringBuilder sb = new StringBuilder();
-            for (byte hashByte : hashBytes) {
-                sb.append(String.format("%02x", hashByte));
-            }
-
-            // Store the MD5 hash value as a string
-            result = sb.toString();
-
-            // Return the MD5 hash value
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Return null if an exception occurs
-        return result;
-    }
-
 }

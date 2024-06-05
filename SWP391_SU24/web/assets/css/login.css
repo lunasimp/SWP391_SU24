@@ -16,13 +16,3 @@
 .left_part {
     background-image: url(../img/login.jpg);
 }
-.google {
-    width: 75%;
-    height: 46px;
-    margin-left: 80px;
-    background: red;
-    border: 1px solid red;
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-}
