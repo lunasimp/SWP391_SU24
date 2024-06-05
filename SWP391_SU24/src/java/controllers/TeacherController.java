@@ -64,31 +64,24 @@ public class TeacherController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int pageSize = 5;
-        int category = ParseUtils.parseIntWithDefault(request.getParameter("category"), -1);
         int semester = ParseUtils.parseIntWithDefault(request.getParameter("semester"), -1);
 
-        String search = request.getParameter("search");
-        if (search == null) {
-            search = "";
-        }
-
         CourseDAO cd = new CourseDAO();
-        CategoryDAO catDao = new CategoryDAO();
         SemesterDAO semesterDao = new SemesterDAO();
         try {
             User loggedUser = (User) request.getSession().getAttribute("user");
-            List<Course> courseByIdData = cd.getAssignedCoursesById(loggedUser.getUserID());
+            List<Course> courses;
+            if (semester == -1) {
+                // If no semester selected, get all courses
+                courses = cd.getAssignedCoursesById(loggedUser.getUserID());
+            } else {
+                // Get courses filtered by selected semester
+                courses = cd.getCoursesBySemester(loggedUser.getUserID(), semester);
+            }
 
-            int listCount = cd.searchCoursesCount(search, category, semester, true);
-            int pageCount = (int) Math.ceil(listCount / (float) pageSize);
-            request.setAttribute("designerCourses", courseByIdData);
-
-            request.setAttribute("pageCount", pageCount);
-            request.setAttribute("listCount", listCount);
-            request.setAttribute("categories", catDao.getAllCategories());
+            request.setAttribute("designerCourses", courses);
             request.setAttribute("semesters", semesterDao.getAllSemesters());
-            
+
             request.getRequestDispatcher("teacher/teacher.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
