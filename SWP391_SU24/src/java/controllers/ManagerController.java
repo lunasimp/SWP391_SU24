@@ -24,7 +24,7 @@ import utils.ParseUtils;
  *
  * @author Acer
  */
-public class TeacherController extends HttpServlet {
+public class ManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,15 +43,16 @@ public class TeacherController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminController</title>");
+            out.println("<title>Servlet ManagerController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManagerController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -68,20 +69,19 @@ public class TeacherController extends HttpServlet {
         CourseDAO cd = new CourseDAO();
         SemesterDAO semesterDao = new SemesterDAO();
         try {
-            User loggedUser = (User) request.getSession().getAttribute("user");
             List<Course> courses;
             if (semester == -1) {
                 // If no semester selected, get all courses
-                courses = cd.getAssignedCoursesById(loggedUser.getUserID());
+                courses = cd.getCourse();
             } else {
                 // Get courses filtered by selected semester
-                courses = cd.getCoursesBySemester(loggedUser.getUserID(), semester);
+                courses = cd.getAllCoursesBySemester(semester);
             }
 
             request.setAttribute("courses", courses);
             request.setAttribute("semesters", semesterDao.getAllSemesters());
 
-            request.getRequestDispatcher("teacher/teacher.jsp").forward(request, response);
+            request.getRequestDispatcher("manager/manager.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,6 +110,6 @@ public class TeacherController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }
