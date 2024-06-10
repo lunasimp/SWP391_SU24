@@ -127,7 +127,22 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/5/2024 8:37:45 PM ******/
+
+/****** Object:  Table [dbo].[Semesters]    Script Date: 6/5/2024 8:37:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Semesters](
+	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
+	[SemesterDescription] [nvarchar](69) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[SemesterID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -150,7 +165,7 @@ CREATE TABLE [dbo].[ClassCourses] (
     FOREIGN KEY ([ClassID]) REFERENCES [dbo].Class,
     FOREIGN KEY ([CourseID]) REFERENCES [dbo].Courses
 );
-
+/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -200,20 +215,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Semesters]    Script Date: 6/5/2024 8:37:45 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Semesters](
-	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
-	[SemesterDescription] [nvarchar](69) NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[SemesterID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+
 /****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -405,11 +407,11 @@ SET IDENTITY_INSERT [dbo].[Questions] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] ON 
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (1, N'SUMMER 2024')
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (1, N'SUMMER 2024', NULL, NULL)
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (2, N'SPRING 2024')
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (2, N'SPRING 2024', NULL, NULL)
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (3, N'FALL 2023')
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (3, N'FALL 2023', NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] OFF
 GO
@@ -495,4 +497,3 @@ USE [master]
 GO
 ALTER DATABASE [SWP391_SU24] SET  READ_WRITE 
 GO
-
