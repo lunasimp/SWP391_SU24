@@ -32,14 +32,14 @@
             display: flex;
             align-content: flex-start;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
+        
         .title a{
             padding: 10px 20px;
             border-radius: 4px;
             background-color: #99ff66;
         }
-
     </style>
 
     <html>
@@ -57,10 +57,11 @@
             <div class="admin-content">
                 <div class="form-container">
                     <div class="title">
-                        <h1>Your Courses</h1>
+                        <h1>Courses</h1>
+                        <a href="${pageContext.request.contextPath}/manager/create-course"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Course</a>
                     </div>
                     <div class="filters">
-                        <form method="get" action="${pageContext.request.contextPath}/teacher">
+                        <form method="get" action="${pageContext.request.contextPath}/manager">
                             <div>
                                 Semesters:
                                 <select name="semester" value="${empty param.semester ? -1 : param.semester}" onchange="this.form.submit()">
@@ -97,8 +98,8 @@
                                     </td>
                                     <td>
                                         <div class="options">
-                                            <a href="${pageContext.request.contextPath}/teacher/view-course?courseId=${x.id}"><i class="fa-solid fa-pen-to-square"></i>View</a>
-                                            <a style="background-color: beige" href="${pageContext.request.contextPath}/teacher/assign-course?courseId=${x.id}"><i class="fa-solid fa-user-pen"></i>Assign</a>
+                                            <a href="${pageContext.request.contextPath}/manager/view-course?courseId=${x.id}"><i class="fa-solid fa-pen-to-square"></i>View</a>
+                                            <a style="background-color: beige" href="${pageContext.request.contextPath}/manager/assign-course?courseId=${x.id}"><i class="fa-solid fa-user-pen"></i>Assign</a>
                                         </div>
                                     </td>
                                 </tr>

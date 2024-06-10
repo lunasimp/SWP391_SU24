@@ -56,6 +56,25 @@ public class CourseDAO extends MyDAO {
         return list;
     }
 
+    public List<Course> getAllCoursesBySemester(int semesterId) {
+        ArrayList<Course> list = new ArrayList<>();
+        xSql = "SELECT *\n"
+                + "FROM Courses c\n"
+                + "JOIN Semesters s ON s.SemesterID = c.SemesterID \n"
+                + "WHERE c.SemesterID = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, semesterId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(fromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public List<Course> getAssignedCoursesById(int userID) {
         ArrayList<Course> list = new ArrayList<>();
         xSql = "SELECT *\n"
@@ -69,6 +88,23 @@ public class CourseDAO extends MyDAO {
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(fromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Course> getCourse() {
+        ArrayList<Course> list = new ArrayList<>();
+        xSql = "SELECT * \n"
+                + "FROM dbo.Courses c\n"
+                + "JOIN dbo.Semesters s ON s.SemesterID = c.SemesterID";
+        try {
+            ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(fromResultSet(rs));
