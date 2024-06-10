@@ -1,14 +1,9 @@
+
 USE [master]
 GO
-/****** Object:  Database [SWP391_SU24]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Database [SWP391_SU24]    Script Date: 6/5/2024 8:37:45 PM ******/
 CREATE DATABASE [SWP391_SU24]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'SWP391_SU24', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\SWP391_SU24.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'SWP391_SU24_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\SWP391_SU24_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
+
 ALTER DATABASE [SWP391_SU24] SET COMPATIBILITY_LEVEL = 150
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -82,7 +77,7 @@ ALTER DATABASE [SWP391_SU24] SET QUERY_STORE = OFF
 GO
 USE [SWP391_SU24]
 GO
-/****** Object:  Table [dbo].[Choices]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[Choices]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +93,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +108,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[Courses]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +127,30 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/5/2024 8:37:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Class] (
+    [ClassID] INT IDENTITY(1,1) NOT NULL,
+    [ClassName] NVARCHAR(69) NOT NULL,
+    [SemesterID] INT NOT NULL, -- Foreign key to link with Semesters
+    PRIMARY KEY CLUSTERED ([ClassID] ASC),
+    FOREIGN KEY ([SemesterID]) REFERENCES [dbo].Semesters
+)
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClassCourses] (
+    [ClassID] [int] IDENTITY(1,1) NOT NULL,
+    [CourseID] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([ClassID], [CourseID]),
+    FOREIGN KEY ([ClassID]) REFERENCES [dbo].Class,
+    FOREIGN KEY ([CourseID]) REFERENCES [dbo].Courses
+);
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +169,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Exams]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[Exams]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -167,7 +185,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,7 +200,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Semesters]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[Semesters]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,15 +208,13 @@ GO
 CREATE TABLE [dbo].[Semesters](
 	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
 	[SemesterDescription] [nvarchar](69) NOT NULL,
-	[StartDate] [date] NULL,
-	[EndDate] [date] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[SemesterID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -214,7 +230,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 6/10/2024 8:38:07 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 6/5/2024 8:37:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -349,6 +365,14 @@ INSERT [dbo].[Courses] ([CourseID], [CourseBannerImage], [Title], [CourseDescrip
 GO
 SET IDENTITY_INSERT [dbo].[Courses] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Class] ON 
+GO
+-- Insert sample classes
+INSERT INTO [dbo].[Class] ([ClassName], [SemesterID])
+VALUES ('SE1840', 1), ('SE1835', 1);
+
+GO
+SET IDENTITY_INSERT [dbo].[Exams] OFF
 SET IDENTITY_INSERT [dbo].[Exams] ON 
 GO
 INSERT [dbo].[Exams] ([ExamID], [ExamName], [CourseID], [Duration]) VALUES (1, N'Module 1 Exam', 1, CAST(N'00:30:00' AS Time))
@@ -381,11 +405,11 @@ SET IDENTITY_INSERT [dbo].[Questions] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] ON 
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (1, N'SUMMER 2024', NULL, NULL)
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (1, N'SUMMER 2024')
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (2, N'SPRING 2024', NULL, NULL)
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (2, N'SPRING 2024')
 GO
-INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription], [StartDate], [EndDate]) VALUES (3, N'FALL 2023', NULL, NULL)
+INSERT [dbo].[Semesters] ([SemesterID], [SemesterDescription]) VALUES (3, N'FALL 2023')
 GO
 SET IDENTITY_INSERT [dbo].[Semesters] OFF
 GO
@@ -401,6 +425,20 @@ INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [P
 GO
 INSERT [dbo].[Users] ([UserID], [UserName], [Email], [Role], [DOB], [Gender], [PhoneNumber], [RestrictedUntil], [RestrictedReason]) VALUES (5, N'lamtung', N'tungnlhe180026@fpt.edu.vn', 2, NULL, NULL, NULL, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL)
 GO
+-- Link the course to a class
+DECLARE @CourseID INT;
+SET @CourseID = SCOPE_IDENTITY(); -- Get the newly inserted CourseID
+
+-- Assuming ClassID is known (e.g., 1 for Class A)
+UPDATE [dbo].[Class]
+SET [SemesterID] = 1 -- Set the appropriate SemesterID
+WHERE [ClassID] = 1;
+
+-- Associate the course with the class
+INSERT INTO [dbo].[ClassCourses] ([ClassID], [CourseID])
+VALUES (1, 1); -- Assuming ClassID is 1
+INSERT INTO [dbo].[ClassCourses] ([ClassID], [CourseID])
+VALUES (1, 2);
 SET IDENTITY_INSERT [dbo].[Users] OFF
 GO
 ALTER TABLE [dbo].[Choices] ADD  DEFAULT ((0)) FOR [IsTrueAnswer]
@@ -457,3 +495,4 @@ USE [master]
 GO
 ALTER DATABASE [SWP391_SU24] SET  READ_WRITE 
 GO
+
