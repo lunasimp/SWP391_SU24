@@ -2,13 +2,7 @@ USE [master]
 GO
 /****** Object:  Database [SWP391_SU24]    Script Date: 6/10/2024 10:52:46 PM ******/
 CREATE DATABASE [SWP391_SU24]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'SWP391_SU24', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\SWP391_SU24.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'SWP391_SU24_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\SWP391_SU24_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
+ 
 ALTER DATABASE [SWP391_SU24] SET COMPATIBILITY_LEVEL = 150
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
@@ -82,6 +76,41 @@ ALTER DATABASE [SWP391_SU24] SET QUERY_STORE = OFF
 GO
 USE [SWP391_SU24]
 GO
+/****** Object:  Table [dbo].[Semesters]    Script Date: 6/10/2024 10:52:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Semesters](
+	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
+	[SemesterDescription] [nvarchar](69) NOT NULL,
+	[StartDate] [date] NULL,
+	[EndDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[SemesterID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Courses]    Script Date: 6/10/2024 10:52:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Courses](
+	[CourseID] [int] IDENTITY(1,1) NOT NULL,
+	[CourseBannerImage] [varchar](420) NULL,
+	[Title] [nvarchar](69) NOT NULL,
+	[CourseDescription] [ntext] NOT NULL,
+	[PublishDate] [date] NULL,
+	[Lecturer] [nvarchar](69) NOT NULL,
+	[SemesterID] [int] NULL,
+PRIMARY KEY CLUSTERED ([CourseID] ASC),
+    CONSTRAINT FK_Courses_Semesters FOREIGN KEY (SemesterID)
+        REFERENCES dbo.Semesters (SemesterID) ON DELETE CASCADE
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
 /****** Object:  Table [dbo].[Choices]    Script Date: 6/10/2024 10:52:46 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -104,14 +133,27 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Classes](
-	[ClassID] [int] IDENTITY(1,1) NOT NULL,
-	[ClassName] [nvarchar](10) NOT NULL,
-	[CourseID] [int] NOT NULL,
-	[SemesterID] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[ClassID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    [ClassID] [int] IDENTITY(1,1) NOT NULL,
+     [ClassName][nvarchar](10)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([ClassID] ASC)
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 6/10/2024 10:52:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](420) NOT NULL,
+	[Email] [varchar](420) NOT NULL,
+	[Role] [int] NOT NULL,
+	[DOB] [date] NULL,
+	[Gender] [bit] NULL,
+	[PhoneNumber] [varchar](69) NULL,
+	[RestrictedUntil] [datetime] NULL,
+	[RestrictedReason] [nvarchar](420) NULL,
+PRIMARY KEY CLUSTERED ([UserID] ASC)
 ) ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/10/2024 10:52:46 PM ******/
@@ -120,33 +162,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[CourseAssignment](
-	[UserId] [int] NOT NULL,
-	[CourseId] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[UserId] ASC,
-	[CourseId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    [CourseID] [int] NOT NULL,
+    [ClassID] [int] NOT NULL,
+    PRIMARY KEY CLUSTERED ([CourseID], [ClassID]),
+    CONSTRAINT FK_CourseAssignment_Courses FOREIGN KEY (CourseID)
+        REFERENCES dbo.Courses (CourseID) ON DELETE CASCADE,
+    CONSTRAINT FK_CourseAssignment_Classes FOREIGN KEY (ClassID)
+        REFERENCES dbo.Classes (ClassID) ON DELETE CASCADE
 ) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Courses]    Script Date: 6/10/2024 10:52:46 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Courses](
-	[CourseID] [int] IDENTITY(1,1) NOT NULL,
-	[CourseBannerImage] [varchar](420) NULL,
-	[Title] [nvarchar](69) NOT NULL,
-	[CourseDescription] [ntext] NOT NULL,
-	[PublishDate] [date] NULL,
-	[Lecturer] [nvarchar](69) NOT NULL,
-	[SemesterID] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[CourseID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[ExamPapers]    Script Date: 6/10/2024 10:52:46 PM ******/
 SET ANSI_NULLS ON
@@ -198,22 +221,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Semesters]    Script Date: 6/10/2024 10:52:46 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Semesters](
-	[SemesterID] [int] IDENTITY(1,1) NOT NULL,
-	[SemesterDescription] [nvarchar](69) NOT NULL,
-	[StartDate] [date] NULL,
-	[EndDate] [date] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[SemesterID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+
 /****** Object:  Table [dbo].[UserAnswers]    Script Date: 6/10/2024 10:52:46 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -230,25 +238,20 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 6/10/2024 10:52:46 PM ******/
+
+/****** Object:  Table [dbo].[CourseAssignment]    Script Date: 6/10/2024 10:52:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Users](
-	[UserID] [int] IDENTITY(1,1) NOT NULL,
-	[UserName] [nvarchar](420) NOT NULL,
-	[Email] [varchar](420) NOT NULL,
-	[Role] [int] NOT NULL,
-	[DOB] [date] NULL,
-	[Gender] [bit] NULL,
-	[PhoneNumber] [varchar](69) NULL,
-	[RestrictedUntil] [datetime] NULL,
-	[RestrictedReason] [nvarchar](420) NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[UserID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+CREATE TABLE [dbo].[ClassAssignments](
+    [ClassID] [int] NOT NULL,
+    [UserID] [int] NOT NULL,
+    PRIMARY KEY CLUSTERED ([ClassID], [UserID]),
+    CONSTRAINT FK_ClassAssignments_Classes FOREIGN KEY (ClassID)
+        REFERENCES dbo.Classes (ClassID) ON DELETE CASCADE,
+    CONSTRAINT FK_ClassAssignments_Users FOREIGN KEY (UserID)
+        REFERENCES dbo.Users (UserID) ON DELETE CASCADE
 ) ON [PRIMARY]
 GO
 SET IDENTITY_INSERT [dbo].[Choices] ON 
@@ -337,21 +340,7 @@ SET IDENTITY_INSERT [dbo].[Choices] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Classes] ON 
 GO
-INSERT [dbo].[Classes] ([ClassID], [ClassName], [CourseID], [SemesterID]) VALUES (1, N'SE1846', 9, 3)
-GO
-INSERT [dbo].[Classes] ([ClassID], [ClassName], [CourseID], [SemesterID]) VALUES (2, N'SE1846', 3, 3)
-GO
-INSERT [dbo].[Classes] ([ClassID], [ClassName], [CourseID], [SemesterID]) VALUES (3, N'SE1846', 8, 3)
-GO
 SET IDENTITY_INSERT [dbo].[Classes] OFF
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 1)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 2)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 3)
-GO
-INSERT [dbo].[CourseAssignment] ([UserId], [CourseId]) VALUES (5, 9)
 GO
 SET IDENTITY_INSERT [dbo].[Courses] ON 
 GO
