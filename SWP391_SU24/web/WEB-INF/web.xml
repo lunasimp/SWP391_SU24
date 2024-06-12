@@ -32,6 +32,10 @@
         <servlet-name>ManagerController</servlet-name>
         <servlet-class>controllers.ManagerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>createCourseController</servlet-name>
+        <servlet-class>controllers.createCourseController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SampleServlet</servlet-name>
         <url-pattern>/sample</url-pattern>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>ManagerController</servlet-name>
         <url-pattern>/manager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createCourseController</servlet-name>
+        <url-pattern>/createCourse</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login</welcome-file>
