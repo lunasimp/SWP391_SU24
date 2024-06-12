@@ -116,29 +116,11 @@ public class CourseDAO extends MyDAO {
     }
 
     public Course fromResultSet(ResultSet rs) throws SQLException {
-    // Create Semester object from ResultSet
-    Semester semester = new Semester(
-        rs.getInt("SemesterID"), 
-        rs.getString("SemesterDescription"),
-        rs.getDate("StartDate").toLocalDate(),
-        rs.getDate("EndDate").toLocalDate()
-    );
-    
-    // Create Course object from ResultSet and associated Semester object
-    Course course = new Course(
-        rs.getInt("CourseID"), 
-        rs.getString("Title"), 
-        rs.getString("CourseDescription"), 
-        rs.getString("CourseBannerImage"), 
-        rs.getDate("PublishDate"), 
-        rs.getString("Lecturer"), 
-        semester
-    );
-    
-    return course;
-}
-
-
+        // Must join with category and semester
+        Semester semester = new Semester(rs.getInt("SemesterID"), rs.getString("SemesterDescription"));
+        Course c = new Course(rs.getInt("CourseID"), rs.getString("Title"), rs.getString("CourseDescription"), rs.getString("CourseBannerImage"), rs.getDate("PublishDate"), rs.getString("Lecturer"), semester);
+        return c;
+    }
 
     public Course insert(Course model) {
         try {

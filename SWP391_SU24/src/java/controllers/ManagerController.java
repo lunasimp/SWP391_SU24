@@ -1,149 +1,115 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controllers;
 
+import dal.CourseDAO;
 import dal.SemesterDAO;
-import model.Semester;
-import utils.ParseUtils;
-
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Course;
+import model.User;
+import utils.ParseUtils;
 
-@WebServlet("/manager")
+/**
+ *
+ * @author Acer
+ */
 public class ManagerController extends HttpServlet {
 
-    private SemesterDAO semesterDao;
-
-    @Override
-    public void init() {
-        semesterDao = new SemesterDAO();
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManagerController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManagerController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null) action = "viewAllSemesters";
+        int semester = ParseUtils.parseIntWithDefault(request.getParameter("semester"), -1);
 
+        CourseDAO cd = new CourseDAO();
+        SemesterDAO semesterDao = new SemesterDAO();
         try {
-            switch (action) {
-                case "viewAllSemesters":
-                    viewAllSemesters(request, response);
-                    break;
-                case "showCreateSemesterForm":
-                    showCreateSemesterForm(request, response);
-                    break;
-                case "showEditSemesterForm":
-                    showEditSemesterForm(request, response);
-                    break;
-                case "deleteSemester":
-                    deleteSemester(request, response);
-                    break;
-                case "hideSemester":
-                    hideSemester(request, response);
-                    break;
-                default:
-                    viewAllSemesters(request, response);
-                    break;
+            List<Course> courses;
+            if (semester == -1) {
+                // If no semester selected, get all courses
+                courses = cd.getCourse();
+            } else {
+                // Get courses filtered by selected semester
+                courses = cd.getAllCoursesBySemester(semester);
             }
-        } catch (SQLException e) {
-            throw new ServletException(e);
+
+            request.setAttribute("courses", courses);
+            request.setAttribute("semesters", semesterDao.getAllSemesters());
+
+            request.getRequestDispatcher("manager/manager.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null) action = "viewAllSemesters";
-
-        try {
-            switch (action) {
-                case "createSemester":
-                    createSemester(request, response);
-                    break;
-                case "updateSemester":
-                    updateSemester(request, response);
-                    break;
-                default:
-                    viewAllSemesters(request, response);
-                    break;
-            }
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        }
+        processRequest(request, response);
     }
 
-    private void viewAllSemesters(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
-        List<Semester> semesters = semesterDao.getAllSemesters();
-        request.setAttribute("semesters", semesters);
-        request.getRequestDispatcher("manager/view-semesters.jsp").forward(request, response);
-    }
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
-    private void showCreateSemesterForm(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("manager/create-semester.jsp").forward(request, response);
-    }
-
-    private void showEditSemesterForm(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Semester semester = semesterDao.getSemesterById(id);
-        request.setAttribute("semester", semester);
-        request.getRequestDispatcher("manager/edit-semester.jsp").forward(request, response);
-    }
-
-    private void createSemester(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        String description = request.getParameter("description");
-        LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
-        LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-
-        Semester semester = new Semester();
-        semester.setDescription(description);
-        semester.setStartDate(startDate);
-        semester.setEndDate(endDate);
-
-        semesterDao.createSemester(semester);
-        response.sendRedirect("manager?action=viewAllSemesters");
-    }
-
-    private void updateSemester(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String description = request.getParameter("description");
-        LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
-        LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-
-        Semester semester = new Semester();
-        semester.setId(id);
-        semester.setDescription(description);
-        semester.setStartDate(startDate);
-        semester.setEndDate(endDate);
-
-        semesterDao.updateSemester(semester);
-        response.sendRedirect("manager?action=viewAllSemesters");
-    }
-
-    private void deleteSemester(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        semesterDao.deleteSemester(id);
-        response.sendRedirect("manager?action=viewAllSemesters");
-    }
-
-    private void hideSemester(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        semesterDao.hideSemester(id);
-        response.sendRedirect("manager?action=viewAllSemesters");
-    }
 }
