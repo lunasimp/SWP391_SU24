@@ -4,8 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Project Java"/>
         <group>
-            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/src/java/controllers/CreateSemesterController.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/web/manager/createSemester.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/web/manager/createCourse.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/src/java/controllers/CreateCourseController.java</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/web/manager/manager.jsp</file>
+            <file>file:/C:/Users/ADMIN/Documents/GitHub/SWP391_SU24/SWP391_SU24/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

@@ -34,6 +34,12 @@
             align-items: center;
             justify-content: space-between;
         }
+        .title1 {
+             display: flex;
+            align-content: flex-start;
+            align-items: center;
+            justify-content: space-between;
+        }
         
         .title a{
             padding: 10px 20px;
@@ -59,6 +65,10 @@
                     <div class="title">
                         <h1>Courses</h1>
                         <a href="${pageContext.request.contextPath}/manager/create-course"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Course</a>
+                    </div>
+                    <div class="title1">
+                        <h1>Semesters</h1>
+                        <a href="${pageContext.request.contextPath}/manager/create-semester"><i class="fa fa-plus-circle" aria-hidden="true"></i> New Semester</a>
                     </div>
                     <div class="filters">
                         <form method="get" action="${pageContext.request.contextPath}/manager">

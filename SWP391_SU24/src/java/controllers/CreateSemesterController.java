@@ -24,8 +24,8 @@ import model.Semester;
  *
  * @author Thanh
  */
-@WebServlet(name = "CreateCourseController", urlPatterns = {"/manager/create-course"})
-public class CreateCourseController extends HttpServlet{
+@WebServlet(name = "CreateSemesterController", urlPatterns = {"/manager/create-semester"})
+public class CreateSemesterController extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,9 +33,9 @@ public class CreateCourseController extends HttpServlet{
             SemesterDAO dbSemester = new SemesterDAO();
             
             req.setAttribute("semesters", dbSemester.getAllSemesters());
-            req.getRequestDispatcher("createCourse.jsp").forward(req, resp);
+            req.getRequestDispatcher("createSemester.jsp").forward(req, resp);
         } catch (SQLException ex) {
-            Logger.getLogger(CreateCourseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateSemesterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

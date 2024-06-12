@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form method="post" action="createCourse">
+        <form method="post" action="manager/create-course">
             <div>
                 <div>
                     <p>Image URL:</p>
@@ -51,16 +51,6 @@
                 <select name="semesterId" required>
                     <c:forEach items="${semesters}" var="s">
                         <option value="${s.id}">${s.description}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div>
-                <div>
-                    <p>Category :</p>
-                </div>
-                <select name="categoryId" required>
-                    <c:forEach items="${categories}" var="c">
-                        <option value="${c.id}">${c.description}</option>
                     </c:forEach>
                 </select>
             </div>
